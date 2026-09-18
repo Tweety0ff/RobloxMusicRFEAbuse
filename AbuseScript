@@ -236,7 +236,7 @@ waitSpeedLabel.Size = UDim2.new(0.45, 0, 1, 0)
 waitSpeedLabel.Font = Enum.Font.GothamSemibold
 waitSpeedLabel.Text = "Kill Sound Service Wait Speed :"
 waitSpeedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-waitSpeedLabel.TextSize = 13
+waitSpeedLabel.TextSize = 10
 waitSpeedLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 local waitSpeedBox = Instance.new("TextBox")
