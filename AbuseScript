@@ -1,13 +1,25 @@
---this will always be open source
---loader soon
-local coreGui = game:GetService("CoreGui")
-local soundService = game:GetService("SoundService")
+-- this will always be open source
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+local targetGui
+local success = pcall(function()
+	targetGui = game:GetService("CoreGui")
+end)
+
+if not success or not targetGui then
+	targetGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+end
+
+local oldGui = targetGui:FindFirstChild("FEAG_Loader")
+if oldGui then
+	oldGui:Destroy()
+end
 
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "FEAG"
-screenGui.Parent = coreGui
+screenGui.Name = "FEAG_Loader"
+screenGui.Parent = targetGui
 screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 screenGui.ResetOnSpawn = false
 
@@ -17,8 +29,8 @@ mainFrame.Parent = screenGui
 mainFrame.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
 mainFrame.BackgroundTransparency = 0.15
 mainFrame.BorderSizePixel = 0
-mainFrame.Position = UDim2.new(0.5, -240, 0.5, -147)
-mainFrame.Size = UDim2.new(0, 480, 0, 295)
+mainFrame.Position = UDim2.new(0.5, -200, 0.5, -140) 
+mainFrame.Size = UDim2.new(0, 400, 0, 280)
 Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 14)
 
 local mainStroke = Instance.new("UIStroke")
@@ -34,325 +46,230 @@ topBar.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
 topBar.BackgroundTransparency = 0.2
 topBar.BorderSizePixel = 0
 topBar.Size = UDim2.new(1, 0, 0, 42)
+topBar.ZIndex = 10
 
 local titleLabel = Instance.new("TextLabel")
 titleLabel.Name = "Title"
 titleLabel.Parent = topBar
 titleLabel.BackgroundTransparency = 1
 titleLabel.Position = UDim2.new(0, 16, 0, 0)
-titleLabel.Size = UDim2.new(0, 200, 1, 0)
+titleLabel.Size = UDim2.new(0, 300, 1, 0)
 titleLabel.Font = Enum.Font.GothamBold
-titleLabel.Text = "Sounds Abuse FE 1.1.2"
+titleLabel.Text = "Sounds Abuse FE Loader"
 titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 titleLabel.TextSize = 16
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-local minimizeButton = Instance.new("TextButton")
-minimizeButton.Name = "Minimize"
-minimizeButton.Parent = topBar
-minimizeButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-minimizeButton.BackgroundTransparency = 0.9
-minimizeButton.Position = UDim2.new(1, -62, 0.5, -11)
-minimizeButton.Size = UDim2.new(0, 22, 0, 22)
-minimizeButton.Font = Enum.Font.GothamBold
-minimizeButton.Text = "_"
-minimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-minimizeButton.TextSize = 14
-Instance.new("UICorner", minimizeButton).CornerRadius = UDim.new(0, 6)
-
-local exitButton = Instance.new("TextButton")
-exitButton.Name = "Exit"
-exitButton.Parent = topBar
-exitButton.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
-exitButton.Position = UDim2.new(1, -32, 0.5, -11)
-exitButton.Size = UDim2.new(0, 22, 0, 22)
-exitButton.Font = Enum.Font.GothamBold
-exitButton.Text = "x"
-exitButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-exitButton.TextSize = 14
-Instance.new("UICorner", exitButton).CornerRadius = UDim.new(0, 6)
-
-local sidebar = Instance.new("Frame")
-sidebar.Name = "Sidebar"
-sidebar.Parent = mainFrame
-sidebar.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
-sidebar.BackgroundTransparency = 0.35
-sidebar.BorderSizePixel = 0
-sidebar.Position = UDim2.new(0, 0, 0, 42)
-sidebar.Size = UDim2.new(0, 118, 1, -42)
-
-local sideHolder = Instance.new("Frame")
-sideHolder.Name = "SideHolder"
-sideHolder.Parent = sidebar
-sideHolder.BackgroundTransparency = 1
-sideHolder.Size = UDim2.new(1, 0, 1, 0)
-
-local sideList = Instance.new("UIListLayout")
-sideList.Parent = sideHolder
-sideList.Padding = UDim.new(0, 6)
-sideList.HorizontalAlignment = Enum.HorizontalAlignment.Center
-sideList.VerticalAlignment = Enum.VerticalAlignment.Top
-
-local sidePadding = Instance.new("UIPadding")
-sidePadding.Parent = sideHolder
-sidePadding.PaddingTop = UDim.new(0, 12)
-
-local mainTabButton = Instance.new("TextButton")
-mainTabButton.Name = "MainTab"
-mainTabButton.Parent = sideHolder
-mainTabButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-mainTabButton.BackgroundTransparency = 0.75
-mainTabButton.BorderSizePixel = 0
-mainTabButton.Size = UDim2.new(1, -20, 0, 32)
-mainTabButton.Font = Enum.Font.GothamSemibold
-mainTabButton.Text = "Main"
-mainTabButton.TextColor3 = Color3.fromRGB(200, 205, 210)
-mainTabButton.TextSize = 13
-Instance.new("UICorner", mainTabButton).CornerRadius = UDim.new(0, 8)
+titleLabel.ZIndex = 11
 
 local mainPage = Instance.new("Frame")
 mainPage.Name = "MainPage"
 mainPage.Parent = mainFrame
 mainPage.BackgroundTransparency = 1
-mainPage.Position = UDim2.new(0, 130, 0, 54)
-mainPage.Size = UDim2.new(1, -142, 1, -66)
+mainPage.Position = UDim2.new(0, 20, 0, 60) 
+mainPage.Size = UDim2.new(1, -40, 1, -80)
 
-local pageList = Instance.new("UIListLayout")
-pageList.Parent = mainPage
-pageList.Padding = UDim.new(0, 5)
-pageList.SortOrder = Enum.SortOrder.LayoutOrder
+local dropdownButton = Instance.new("TextButton")
+dropdownButton.Name = "DropdownButton"
+dropdownButton.Parent = mainPage
+dropdownButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+dropdownButton.BackgroundTransparency = 0.88
+dropdownButton.BorderSizePixel = 0
+dropdownButton.Size = UDim2.new(1, 0, 0, 34)
+dropdownButton.Font = Enum.Font.GothamSemibold
+dropdownButton.Text = ""
+dropdownButton.AutoButtonColor = false
+dropdownButton.ZIndex = 5
+Instance.new("UICorner", dropdownButton).CornerRadius = UDim.new(0, 8)
 
-local rfeStatusLabel = Instance.new("TextLabel")
-rfeStatusLabel.Name = "RFEStatus"
-rfeStatusLabel.Parent = mainPage
-rfeStatusLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-rfeStatusLabel.BackgroundTransparency = 0.92
-rfeStatusLabel.Size = UDim2.new(1, 0, 0, 28)
-rfeStatusLabel.Font = Enum.Font.GothamSemibold
-rfeStatusLabel.Text = "RespectFilteringEnabled(RFE) : nil"
-rfeStatusLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-rfeStatusLabel.TextSize = 13
-rfeStatusLabel.LayoutOrder = 3
-Instance.new("UICorner", rfeStatusLabel).CornerRadius = UDim.new(0, 8)
+local dropdownText = Instance.new("TextLabel")
+dropdownText.Name = "Text"
+dropdownText.Parent = dropdownButton
+dropdownText.BackgroundTransparency = 1
+dropdownText.Position = UDim2.new(0, 12, 0, 0)
+dropdownText.Size = UDim2.new(1, -40, 1, 0)
+dropdownText.Font = Enum.Font.GothamSemibold
+dropdownText.Text = "Select script version to load"
+dropdownText.TextColor3 = Color3.fromRGB(255, 255, 255)
+dropdownText.TextSize = 13
+dropdownText.TextXAlignment = Enum.TextXAlignment.Left
+dropdownText.ZIndex = 6
 
-local buttonsRow = Instance.new("Frame")
-buttonsRow.Name = "ButtonsRow"
-buttonsRow.Parent = mainPage
-buttonsRow.BackgroundTransparency = 1
-buttonsRow.Size = UDim2.new(1, 0, 0, 32)
-buttonsRow.LayoutOrder = 4
+local dropdownArrow = Instance.new("TextLabel")
+dropdownArrow.Name = "Arrow"
+dropdownArrow.Parent = dropdownButton
+dropdownArrow.BackgroundTransparency = 1
+dropdownArrow.Position = UDim2.new(1, -30, 0, 0)
+dropdownArrow.Size = UDim2.new(0, 24, 1, 0)
+dropdownArrow.Font = Enum.Font.GothamBold
+dropdownArrow.Text = "▼"
+dropdownArrow.TextColor3 = Color3.fromRGB(200, 205, 210)
+dropdownArrow.TextSize = 12
+dropdownArrow.ZIndex = 6
 
-local annoyingSoundButton = Instance.new("TextButton")
-annoyingSoundButton.Name = "AnnoyingSound"
-annoyingSoundButton.Parent = buttonsRow
-annoyingSoundButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-annoyingSoundButton.BackgroundTransparency = 0.9
-annoyingSoundButton.Size = UDim2.new(1, 0, 1, 0)
-annoyingSoundButton.Font = Enum.Font.GothamSemibold
-annoyingSoundButton.Text = "Annoying Sound"
-annoyingSoundButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-annoyingSoundButton.TextSize = 13
-Instance.new("UICorner", annoyingSoundButton).CornerRadius = UDim.new(0, 8)
+local dropdownList = Instance.new("Frame")
+dropdownList.Name = "DropdownList"
+dropdownList.Parent = mainPage
+dropdownList.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
+dropdownList.BackgroundTransparency = 0.05
+dropdownList.BorderSizePixel = 0
+dropdownList.Position = UDim2.new(0, 0, 0, 38)
+dropdownList.Size = UDim2.new(1, 0, 0, 0)
+dropdownList.ClipsDescendants = true
+dropdownList.Visible = false
+dropdownList.ZIndex = 20
+Instance.new("UICorner", dropdownList).CornerRadius = UDim.new(0, 8)
 
-local buttonsRow2 = Instance.new("Frame")
-buttonsRow2.Name = "ButtonsRow2"
-buttonsRow2.Parent = mainPage
-buttonsRow2.BackgroundTransparency = 1
-buttonsRow2.Size = UDim2.new(1, 0, 0, 32)
-buttonsRow2.LayoutOrder = 5
+local listStroke = Instance.new("UIStroke")
+listStroke.Color = Color3.fromRGB(255, 255, 255)
+listStroke.Transparency = 0.8
+listStroke.Thickness = 1
+listStroke.Parent = dropdownList
 
-local stopButton = Instance.new("TextButton")
-stopButton.Name = "Stop"
-stopButton.Parent = buttonsRow2
-stopButton.BackgroundColor3 = Color3.fromRGB(52, 211, 153)
-stopButton.BackgroundTransparency = 0.25
-stopButton.Size = UDim2.new(0.48, 0, 1, 0)
-stopButton.Font = Enum.Font.GothamSemibold
-stopButton.Text = "Stop Killing Sound Service"
-stopButton.TextColor3 = Color3.fromRGB(10, 15, 12)
-stopButton.TextSize = 13
-Instance.new("UICorner", stopButton).CornerRadius = UDim.new(0, 8)
+local listPadding = Instance.new("UIPadding")
+listPadding.Parent = dropdownList
+listPadding.PaddingTop = UDim.new(0, 6)
+listPadding.PaddingBottom = UDim.new(0, 6)
+listPadding.PaddingLeft = UDim.new(0, 6)
+listPadding.PaddingRight = UDim.new(0, 6)
 
-local killSoundButton = Instance.new("TextButton")
-killSoundButton.Name = "KillSoundService"
-killSoundButton.Parent = buttonsRow2
-killSoundButton.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
-killSoundButton.BackgroundTransparency = 0.4
-killSoundButton.Position = UDim2.new(0.52, 0, 0, 0)
-killSoundButton.Size = UDim2.new(0.48, 0, 1, 0)
-killSoundButton.Font = Enum.Font.GothamSemibold
-killSoundButton.Text = "Kill Sound Service"
-killSoundButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-killSoundButton.TextSize = 13
-Instance.new("UICorner", killSoundButton).CornerRadius = UDim.new(0, 8)
+local listItems = Instance.new("Frame")
+listItems.Name = "Items"
+listItems.Parent = dropdownList
+listItems.BackgroundTransparency = 1
+listItems.Size = UDim2.new(1, 0, 0, 0)
+listItems.ZIndex = 21
 
-local muteRow = Instance.new("Frame")
-muteRow.Name = "MuteRow"
-muteRow.Parent = mainPage
-muteRow.BackgroundTransparency = 1
-muteRow.Size = UDim2.new(1, 0, 0, 32)
-muteRow.LayoutOrder = 6
+local itemsLayout = Instance.new("UIListLayout")
+itemsLayout.Parent = listItems
+itemsLayout.Padding = UDim.new(0, 4)
+itemsLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
-local unmuteButton = Instance.new("TextButton")
-unmuteButton.Name = "UnmuteGame"
-unmuteButton.Parent = muteRow
-unmuteButton.BackgroundColor3 = Color3.fromRGB(52, 211, 153)
-unmuteButton.BackgroundTransparency = 0.25
-unmuteButton.Size = UDim2.new(0.48, 0, 1, 0)
-unmuteButton.Font = Enum.Font.GothamSemibold
-unmuteButton.Text = "Unmute Game"
-unmuteButton.TextColor3 = Color3.fromRGB(10, 15, 12)
-unmuteButton.TextSize = 13
-Instance.new("UICorner", unmuteButton).CornerRadius = UDim.new(0, 8)
+itemsLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	listItems.Size = UDim2.new(1, 0, 0, itemsLayout.AbsoluteContentSize.Y)
+end)
 
-local muteButton = Instance.new("TextButton")
-muteButton.Name = "MuteGame"
-muteButton.Parent = muteRow
-muteButton.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
-muteButton.BackgroundTransparency = 0.4
-muteButton.Position = UDim2.new(0.52, 0, 0, 0)
-muteButton.Size = UDim2.new(0.48, 0, 1, 0)
-muteButton.Font = Enum.Font.GothamSemibold
-muteButton.Text = "Mute Game"
-muteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-muteButton.TextSize = 13
-Instance.new("UICorner", muteButton).CornerRadius = UDim.new(0, 8)
+local option1 = Instance.new("TextButton")
+option1.Name = "Option1"
+option1.Parent = listItems
+option1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+option1.BackgroundTransparency = 0.9
+option1.BorderSizePixel = 0
+option1.Size = UDim2.new(1, 0, 0, 40)
+option1.Font = Enum.Font.GothamSemibold
+option1.Text = "▶  Load Last Version Script"
+option1.TextColor3 = Color3.fromRGB(255, 255, 255)
+option1.TextSize = 14
+option1.LayoutOrder = 1
+option1.ZIndex = 22
+Instance.new("UICorner", option1).CornerRadius = UDim.new(0, 8)
 
-local waitSpeedRow = Instance.new("Frame")
-waitSpeedRow.Name = "WaitSpeedRow"
-waitSpeedRow.Parent = mainPage
-waitSpeedRow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-waitSpeedRow.BackgroundTransparency = 0.92
-waitSpeedRow.Size = UDim2.new(1, 0, 0, 40)
-waitSpeedRow.LayoutOrder = 7
-Instance.new("UICorner", waitSpeedRow).CornerRadius = UDim.new(0, 8)
+local option2 = Instance.new("TextButton")
+option2.Name = "Option2"
+option2.Parent = listItems
+option2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+option2.BackgroundTransparency = 0.9
+option2.BorderSizePixel = 0
+option2.Size = UDim2.new(1, 0, 0, 40)
+option2.Font = Enum.Font.GothamSemibold
+option2.Text = "▶  Load 1.0 Version Script(old ui)"
+option2.TextColor3 = Color3.fromRGB(255, 255, 255)
+option2.TextSize = 14
+option2.LayoutOrder = 2
+option2.ZIndex = 22
+Instance.new("UICorner", option2).CornerRadius = UDim.new(0, 8)
 
-local waitSpeedLabel = Instance.new("TextLabel")
-waitSpeedLabel.Name = "Label"
-waitSpeedLabel.Parent = waitSpeedRow
-waitSpeedLabel.BackgroundTransparency = 1
-waitSpeedLabel.Position = UDim2.new(0, 12, 0, 0)
-waitSpeedLabel.Size = UDim2.new(0.45, 0, 1, 0)
-waitSpeedLabel.Font = Enum.Font.GothamSemibold
-waitSpeedLabel.Text = "Kill Sound Service Wait Speed :"
-waitSpeedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-waitSpeedLabel.TextSize = 10
-waitSpeedLabel.TextXAlignment = Enum.TextXAlignment.Left
+local statusLabel = Instance.new("TextLabel")
+statusLabel.Name = "Status"
+statusLabel.Parent = mainPage
+statusLabel.BackgroundTransparency = 1
+statusLabel.Position = UDim2.new(0, 0, 0, 42)
+statusLabel.Size = UDim2.new(1, 0, 0, 20)
+statusLabel.Font = Enum.Font.GothamSemibold
+statusLabel.Text = ""
+statusLabel.TextColor3 = Color3.fromRGB(52, 211, 153)
+statusLabel.TextSize = 12
 
-local waitSpeedBox = Instance.new("TextBox")
-waitSpeedBox.Name = "WaitSpeed"
-waitSpeedBox.Parent = waitSpeedRow
-waitSpeedBox.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
-waitSpeedBox.BackgroundTransparency = 0.2
-waitSpeedBox.Position = UDim2.new(0.5, 0, 0.5, -13)
-waitSpeedBox.Size = UDim2.new(0.45, -8, 0, 26)
-waitSpeedBox.ClearTextOnFocus = false
-waitSpeedBox.Font = Enum.Font.GothamSemibold
-waitSpeedBox.Text = "0.5"
-waitSpeedBox.TextColor3 = Color3.fromRGB(52, 211, 153)
-waitSpeedBox.TextSize = 14
-Instance.new("UICorner", waitSpeedBox).CornerRadius = UDim.new(0, 8)
-
-local devNoteLabel = Instance.new("TextLabel")
-devNoteLabel.Name = "DevNote"
-devNoteLabel.Parent = mainPage
-devNoteLabel.BackgroundTransparency = 1
-devNoteLabel.Size = UDim2.new(1, 0, 0, 34)
-devNoteLabel.Font = Enum.Font.Gotham
-devNoteLabel.Text = "Dev Note : This Script is FE and it only FE when RespectFilteringEnabled(RFE) is disabled , elseif RespectFilteringEnabled(RFE) is true then it only be client , mostly RespectFilteringEnabled(RFE) disabled game are classic game"
-devNoteLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
-devNoteLabel.TextSize = 10
-devNoteLabel.TextWrapped = true
-devNoteLabel.TextXAlignment = Enum.TextXAlignment.Left
-devNoteLabel.TextYAlignment = Enum.TextYAlignment.Top
-devNoteLabel.LayoutOrder = 8
-
-local sound = Instance.new("Sound")
-sound.Parent = soundService
-sound.SoundId = "rbxassetid://9086208751"
-sound.Volume = 5
-sound.Name = "FEAG_Sound"
-
-exitButton.MouseButton1Click:Connect(function() screenGui:Destroy() end)
-
-local muteLoopActive = false
-
-muteButton.MouseButton1Click:Connect(function()
-	if muteLoopActive then return end
-	muteLoopActive = true
+local function closeGuiAnimation()
+	local tweenInfo = TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In)
 	
-	task.spawn(function()
-		while muteLoopActive do
-			task.wait()
-			for _, descendant in ipairs(workspace:GetDescendants()) do
-				if descendant:IsA("Sound") and descendant.IsPlaying then
-					descendant:Stop()
-				end
-			end
+	local closeTween = TweenService:Create(mainFrame, tweenInfo, {
+		GroupTransparency = 1,
+		Size = UDim2.new(0, 1, 0, 1)
+	})
+	
+	closeTween:Play()
+	
+	closeTween.Completed:Connect(function()
+		if screenGui then
+			screenGui:Destroy()
 		end
 	end)
-end)
+end
 
-unmuteButton.MouseButton1Click:Connect(function()
-	muteLoopActive = false
-end)
+local function loadScript1()
+	loadstring(game:HttpGet(""))()
+	task.delay(0.01, closeGuiAnimation)
+end
 
-annoyingSoundButton.MouseButton1Click:Connect(function()
-	local descendants = workspace:GetDescendants()
-	for _, descendant in ipairs(descendants) do
-		if descendant:IsA("Sound") then
-			descendant:Play()
-		end
-	end
-end)
+local function loadScript2()
+	loadstring(game:HttpGet(""))()
+	task.delay(0.001, closeGuiAnimation)
+end
 
-local soundSpamActive = false
-
-killSoundButton.MouseButton1Click:Connect(function()
-	if soundSpamActive then return end
-	soundSpamActive = true
-
-	task.spawn(function()
-		while soundSpamActive do
-			local waitSpeed = tonumber(waitSpeedBox.Text) or 0.5
-			task.wait(waitSpeed)
-			
-			local descendants = workspace:GetDescendants()
-			for _, descendant in ipairs(descendants) do
-				if descendant:IsA("Sound") then
-					descendant:Play()
-				end
-			end
+local statusToken = 0
+local function showStatus(text)
+	local token = statusToken + 1
+	statusToken = token
+	statusLabel.Text = text
+	task.delay(3, function()
+		if statusToken == token then
+			statusLabel.Text = ""
 		end
 	end)
-end)
+end
 
-stopButton.MouseButton1Click:Connect(function() 
-	soundSpamActive = false 
-end)
+local dropdownOpen = false
 
-sound:Play()
+local function setDropdown(open)
+	dropdownOpen = open
+	dropdownArrow.Text = open and "▲" or "▼"
 
-local isMinimized = false
-minimizeButton.MouseButton1Click:Connect(function()
-	isMinimized = not isMinimized
-	for _, child in ipairs(mainFrame:GetChildren()) do
-		if child ~= topBar and child ~= mainStroke and not child:IsA("UICorner") then
-			child.Visible = not isMinimized
-		end
-	end
-	
-	if isMinimized then
-		mainFrame.Size = UDim2.new(0, 480, 0, 42)
-		mainFrame.BackgroundTransparency = 1
-		mainStroke.Transparency = 1
+	if open then
+		dropdownList.Visible = true
+		local targetHeight = listItems.Size.Y.Offset + listPadding.PaddingTop.Offset + listPadding.PaddingBottom.Offset
+		
+		dropdownList.Size = UDim2.new(1, 0, 0, 0)
+		TweenService:Create(dropdownList, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = UDim2.new(1, 0, 0, targetHeight)
+		}):Play()
 	else
-		mainFrame.Size = UDim2.new(0, 480, 0, 295)
-		mainFrame.BackgroundTransparency = 0.15
-		mainStroke.Transparency = 0.85
+		TweenService:Create(dropdownList, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+			Size = UDim2.new(1, 0, 0, 0)
+		}):Play()
+		task.delay(0.15, function()
+			if not dropdownOpen then
+				dropdownList.Visible = false
+			end
+		end)
 	end
-	
-	minimizeButton.Text = isMinimized and "+" or "_"
+end
+
+dropdownButton.MouseButton1Click:Connect(function()
+	setDropdown(not dropdownOpen)
+end)
+
+option1.MouseButton1Click:Connect(function()
+	loadScript1()
+	showStatus("Last Version Loaded ✓")
+	dropdownText.Text = "Load Last Version"
+	setDropdown(false)
+end)
+
+option2.MouseButton1Click:Connect(function()
+	loadScript2()
+	showStatus("Version 1.0 Loaded ✓")
+	dropdownText.Text = "Load 1.0(old ui)"
+	setDropdown(false)
 end)
 
 local function enableSmoothDragging(dragBar, frame)
@@ -363,28 +280,17 @@ local function enableSmoothDragging(dragBar, frame)
 
 	local tweenInfo = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-	local function update(input)
-		local delta = input.Position - dragStart
-		local targetPosition = UDim2.new(
-			startPos.X.Scale,
-			startPos.X.Offset + delta.X,
-			startPos.Y.Scale,
-			startPos.Y.Offset + delta.Y
-		)
-		TweenService:Create(frame, tweenInfo, { Position = targetPosition }):Play()
-	end
-
 	dragBar.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
 			dragStart = input.Position
 			startPos = frame.Position
+		end
+	end)
 
-			input.Changed:Connect(function()
-				if input.UserInputState == Enum.UserInputState.End then
-					dragging = false
-				end
-			end)
+	UserInputService.InputEnded:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = false
 		end
 	end)
 
@@ -396,24 +302,16 @@ local function enableSmoothDragging(dragBar, frame)
 
 	UserInputService.InputChanged:Connect(function(input)
 		if input == dragInput and dragging then
-			update(input)
+			local delta = input.Position - dragStart
+			local targetPosition = UDim2.new(
+				startPos.X.Scale,
+				startPos.X.Offset + delta.X,
+				startPos.Y.Scale,
+				startPos.Y.Offset + delta.Y
+			)
+			TweenService:Create(frame, tweenInfo, { Position = targetPosition }):Play()
 		end
 	end)
 end
 
 enableSmoothDragging(topBar, mainFrame)
-
-task.spawn(function()
-	while true do
-		task.wait(0.5)
-		local respectFilteringEnabled = soundService.RespectFilteringEnabled
-
-		if respectFilteringEnabled == true then
-			rfeStatusLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
-			rfeStatusLabel.Text = "RespectFilteringEnabled(RFE) : true"
-		elseif respectFilteringEnabled == false then
-			rfeStatusLabel.Text = "RespectFilteringEnabled(RFE) : false"
-			rfeStatusLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
-		end
-	end
-end)
