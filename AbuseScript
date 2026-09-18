@@ -55,7 +55,7 @@ titleLabel.BackgroundTransparency = 1
 titleLabel.Position = UDim2.new(0, 16, 0, 0)
 titleLabel.Size = UDim2.new(0, 300, 1, 0)
 titleLabel.Font = Enum.Font.GothamBold
-titleLabel.Text = "Sounds Abuse FE Loader"
+titleLabel.Text = "Sounds Abuse FE Loader 1.1"
 titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 titleLabel.TextSize = 16
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -188,6 +188,54 @@ statusLabel.Font = Enum.Font.GothamSemibold
 statusLabel.Text = ""
 statusLabel.TextColor3 = Color3.fromRGB(52, 211, 153)
 statusLabel.TextSize = 12
+
+local GithubRow = Instance.new("Frame")
+GithubRow.Name = "GithubRow"
+GithubRow.Parent = mainPage
+GithubRow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+GithubRow.BackgroundTransparency = 0.92
+GithubRow.Position = UDim2.new(0, 0, 1, -40) -- Размещаем в самом низу mainPage
+GithubRow.Size = UDim2.new(1, 0, 0, 40)
+Instance.new("UICorner", GithubRow).CornerRadius = UDim.new(0, 8)
+
+local GithubLabel = Instance.new("TextLabel")
+GithubLabel.Name = "Label"
+GithubLabel.Parent = GithubRow
+GithubLabel.BackgroundTransparency = 1
+GithubLabel.Position = UDim2.new(0, 75, 0, -50)
+GithubLabel.Size = UDim2.new(0.65, 0, 1, 0)
+GithubLabel.Font = Enum.Font.GothamSemibold
+GithubLabel.Text = "Check out repository(open source)"
+GithubLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+GithubLabel.TextSize = 12
+GithubLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local GithubLabel = Instance.new("TextLabel")
+GithubLabel.Name = "Label"
+GithubLabel.Parent = GithubRow
+GithubLabel.BackgroundTransparency = 1
+GithubLabel.Position = UDim2.new(0, 175, 0, -35)
+GithubLabel.Size = UDim2.new(0.65, 0, 1, 0)
+GithubLabel.Font = Enum.Font.GothamSemibold
+GithubLabel.Text = "↓"
+GithubLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+GithubLabel.TextSize = 25
+GithubLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local GithubBox = Instance.new("TextBox")
+GithubBox.Name = "WaitSpeed"
+GithubBox.Parent = GithubRow
+GithubBox.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
+GithubBox.BackgroundTransparency = 0.2
+GithubBox.Position = UDim2.new(-0.01, 8, 0.5, -13)
+GithubBox.Size = UDim2.new(1, -8, 0, 26)
+GithubBox.ClearTextOnFocus = false
+GithubBox.TextEditable = false -- Делает текст-бокс неизменяемым
+GithubBox.Font = Enum.Font.GothamSemibold
+GithubBox.Text = "https://github.com/Tweety0ff/RobloxMusicRFEAbuse"
+GithubBox.TextColor3 = Color3.fromRGB(52, 211, 153)
+GithubBox.TextSize = 14
+Instance.new("UICorner", GithubBox).CornerRadius = UDim.new(0, 8)
 
 local function closeGuiAnimation()
 	local tweenInfo = TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In)
