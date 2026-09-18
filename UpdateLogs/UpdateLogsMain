@@ -1,1 +1,16 @@
-soon
+Update logs :
+1.0(16 September 2026):
+Released
+1.0.1(16 September 2026):
+Fixed minimize not working
+Fixed dragging not working
+1.1(18 September 2026):
+Reworked ui
+Changed some buttons text a bit
+1.1.1(18 September 2026):
+Fixed Mute/Unmute game buttons
+Fixed ui transparency
+Fixed ui scale
+1.1.2(18 September 2026):
+Fixed 1 corner not being rounded
+Fixed when minimized lower corners not being rounded
