@@ -1,7 +1,227 @@
-Loader Update Logs :
-1.0(18 September 2026):
-Added Loader
-1.0.1(18 September 2026):
-Added Loader Disappear Animation
-1.1(18 September 2026):
-Added Github repo link
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+
+local targetGui
+local success = pcall(function()
+	targetGui = game:GetService("CoreGui")
+end)
+
+if not success or not targetGui then
+	targetGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+end
+
+
+local oldGui = targetGui:FindFirstChild("FEAG_UpdateLogs")
+if oldGui then
+	oldGui:Destroy()
+end
+
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "FEAG_UpdateLogs"
+screenGui.Parent = targetGui
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.ResetOnSpawn = false
+
+
+local mainFrame = Instance.new("CanvasGroup")
+mainFrame.Name = "MainFrame"
+mainFrame.Parent = screenGui
+mainFrame.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
+mainFrame.BackgroundTransparency = 0.15
+mainFrame.BorderSizePixel = 0
+mainFrame.Position = UDim2.new(0.5, -200, 0.5, -175)
+mainFrame.Size = UDim2.new(0, 400, 0, 350)
+mainFrame.GroupTransparency = 1
+Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 14)
+
+local mainStroke = Instance.new("UIStroke")
+mainStroke.Color = Color3.fromRGB(255, 255, 255)
+mainStroke.Transparency = 0.85
+mainStroke.Thickness = 1
+mainStroke.Parent = mainFrame
+
+local topBar = Instance.new("Frame")
+topBar.Name = "TopBar"
+topBar.Parent = mainFrame
+topBar.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
+topBar.BackgroundTransparency = 0.2
+topBar.BorderSizePixel = 0
+topBar.Size = UDim2.new(1, 0, 0, 42)
+topBar.ZIndex = 10
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Name = "Title"
+titleLabel.Parent = topBar
+titleLabel.BackgroundTransparency = 1
+titleLabel.Position = UDim2.new(0, 16, 0, 0)
+titleLabel.Size = UDim2.new(0, 200, 1, 0)
+titleLabel.Font = Enum.Font.GothamBold
+titleLabel.Text = "Update Logs Main"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.TextSize = 16
+titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+
+local closeBtn = Instance.new("TextButton")
+closeBtn.Name = "CloseButton"
+closeBtn.Parent = topBar
+closeBtn.BackgroundTransparency = 1
+closeBtn.Position = UDim2.new(1, -42, 0, 0)
+closeBtn.Size = UDim2.new(0, 42, 1, 0)
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.Text = "X"
+closeBtn.TextColor3 = Color3.fromRGB(200, 205, 210)
+closeBtn.TextSize = 16
+
+-- Окно с прокруткой для логов
+local scrollFrame = Instance.new("ScrollingFrame")
+scrollFrame.Name = "ScrollFrame"
+scrollFrame.Parent = mainFrame
+scrollFrame.Active = true
+scrollFrame.BackgroundTransparency = 1
+scrollFrame.BorderSizePixel = 0
+scrollFrame.Position = UDim2.new(0, 0, 0, 42)
+scrollFrame.Size = UDim2.new(1, 0, 1, -42)
+scrollFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+scrollFrame.ScrollBarThickness = 4
+scrollFrame.ScrollBarImageColor3 = Color3.fromRGB(255, 255, 255)
+scrollFrame.ScrollBarImageTransparency = 0.8
+scrollFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+
+local scrollPadding = Instance.new("UIPadding")
+scrollPadding.Parent = scrollFrame
+scrollPadding.PaddingTop = UDim.new(0, 10)
+scrollPadding.PaddingBottom = UDim.new(0, 10)
+scrollPadding.PaddingLeft = UDim.new(0, 16)
+scrollPadding.PaddingRight = UDim.new(0, 16)
+
+local scrollLayout = Instance.new("UIListLayout")
+scrollLayout.Parent = scrollFrame
+scrollLayout.Padding = UDim.new(0, 15)
+scrollLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+
+local layoutOrderCounter = 0
+
+local function addLog(version, date, changesArray)
+	layoutOrderCounter = layoutOrderCounter + 1
+	
+	local logEntry = Instance.new("Frame")
+	logEntry.Name = "Log_" .. version
+	logEntry.Parent = scrollFrame
+	logEntry.BackgroundTransparency = 1
+	logEntry.Size = UDim2.new(1, -8, 0, 0)
+	logEntry.AutomaticSize = Enum.AutomaticSize.Y
+	logEntry.LayoutOrder = layoutOrderCounter
+	
+	local logLayout = Instance.new("UIListLayout")
+	logLayout.Parent = logEntry
+	logLayout.Padding = UDim.new(0, 6)
+	logLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	
+	local header = Instance.new("TextLabel")
+	header.Name = "Header"
+	header.Parent = logEntry
+	header.BackgroundTransparency = 1
+	header.Size = UDim2.new(1, 0, 0, 20)
+	header.Font = Enum.Font.GothamBold
+	header.Text = "v" .. version .. "  •  " .. date
+	header.TextColor3 = Color3.fromRGB(255, 255, 255)
+	header.TextSize = 14
+	header.TextXAlignment = Enum.TextXAlignment.Left
+	header.LayoutOrder = 1
+	
+
+	for i, changeText in ipairs(changesArray) do
+		local point = Instance.new("TextLabel")
+		point.Name = "Point_" .. i
+		point.Parent = logEntry
+		point.BackgroundTransparency = 1
+		point.Size = UDim2.new(1, 0, 0, 0)
+		point.AutomaticSize = Enum.AutomaticSize.Y
+		point.Font = Enum.Font.GothamSemibold
+		point.Text = "— " .. changeText
+		point.TextColor3 = Color3.fromRGB(200, 205, 210)
+		point.TextSize = 12
+		point.TextXAlignment = Enum.TextXAlignment.Left
+		point.TextWrapped = true
+		point.LayoutOrder = i + 1
+	end
+end
+
+addLog("1.2", "September 19 2026", {
+	"Added Update Logs"
+})
+
+addLog("1.1", "September 18 2026", {
+	"Added Github repo link"
+})
+
+addLog("1.0.1", "September 16 2026", {
+	"Added Loader Disappear Animation"
+})
+
+addLog("1.0", "September 16 2026", {
+	"Release of Sounds Abuse FE Loader"
+})
+
+
+TweenService:Create(mainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+	GroupTransparency = 0
+}):Play()
+
+
+closeBtn.MouseButton1Click:Connect(function()
+	local closeTween = TweenService:Create(mainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+		GroupTransparency = 1,
+		Size = UDim2.new(0, 350, 0, 300)
+	})
+	closeTween:Play()
+	closeTween.Completed:Connect(function()
+		screenGui:Destroy()
+	end)
+end)
+
+
+local function enableSmoothDragging(dragBar, frame)
+	local dragging = false
+	local dragInput, dragStart, startPos
+
+	local tweenInfo = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+	dragBar.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = frame.Position
+		end
+	end)
+
+	UserInputService.InputEnded:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = false
+		end
+	end)
+
+	dragBar.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			local delta = input.Position - dragStart
+			local targetPos = UDim2.new(
+				startPos.X.Scale, startPos.X.Offset + delta.X,
+				startPos.Y.Scale, startPos.Y.Offset + delta.Y
+			)
+			TweenService:Create(frame, tweenInfo, { Position = targetPos }):Play()
+		end
+	end)
+end
+
+enableSmoothDragging(topBar, mainFrame)
