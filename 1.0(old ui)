@@ -27,7 +27,8 @@ local uiCorner5 = Instance.new("UICorner")
 local textLabel2 = Instance.new("TextLabel")
 local waitSpeedBox = Instance.new("TextBox")
 
-screenGui.Name = ". Ǥ҉̷҉̵҉̸҉̷҉̵҉̸҉̡҉̡҉̼҉̱҉͎҉͎҉̞҉̼҉̱҉͎҉͎҉̞҉ͤ҉ͬ҉̅҉ͤ҉ͬ"
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "FEAG"
 screenGui.Parent = coreGui
 screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 screenGui.ResetOnSpawn = false
