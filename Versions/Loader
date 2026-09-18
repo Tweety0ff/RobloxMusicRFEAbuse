@@ -203,7 +203,7 @@ ExecuteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 ExecuteButton.TextSize = 13
 Instance.new("UICorner", ExecuteButton).CornerRadius = UDim.new(0, 8)
 
--- ==================== ВТОРОЙ DROPDOWN (ЛОГИ) ====================
+
 local logsDropdownButton = Instance.new("TextButton")
 logsDropdownButton.Name = "LogsDropdownButton"
 logsDropdownButton.Parent = mainPage
@@ -457,10 +457,10 @@ local function loadScript1()
 end
 
 local function loadScript2()
+    task.delay(0.01, closeGuiAnimation)
 	local url = "https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/Versions/1.0(old%20ui)"
 	if safeLoad(url) then
 		showStatus("Version 1.0 Loaded ✓")
-		task.delay(0.01, closeGuiAnimation)
 	end
 end
 
