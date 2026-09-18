@@ -207,13 +207,14 @@ local function closeGuiAnimation()
 end
 
 local function loadScript1()
-	loadstring(game:HttpGet(""))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/Last"))()
 	task.delay(0.01, closeGuiAnimation)
 end
-
+--idk why but it doesnt work when task delay is lower than line 216, im too lazy to fix that
 local function loadScript2()
-	loadstring(game:HttpGet(""))()
-	task.delay(0.001, closeGuiAnimation)
+    task.delay(0.01, closeGuiAnimation)
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/1.0(old%20ui)"))()
+    screenGui:Destroy()
 end
 
 local statusToken = 0
