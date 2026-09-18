@@ -1,1 +1,390 @@
-soon
+local coreGui = game:GetService("CoreGui")
+local soundService = game:GetService("SoundService")
+local starterGui = game:GetService("StarterGui")
+local screenGui = Instance.new("ScreenGui")
+local frame = Instance.new("Frame")
+local frame2 = Instance.new("Frame")
+local frame3 = Instance.new("Frame")
+local rfeStatusLabel = Instance.new("TextLabel")
+local textButton = Instance.new("TextButton")
+local uiCorner = Instance.new("UICorner")
+local textButton2 = Instance.new("TextButton")
+local uiCorner2 = Instance.new("UICorner")
+local se = Instance.new("TextButton")
+local uiCorner3 = Instance.new("UICorner")
+local path = Instance.new("TextLabel")
+local top = Instance.new("Frame")
+local top2 = Instance.new("Frame")
+local imageLabel = Instance.new("ImageLabel")
+local textLabel = Instance.new("TextLabel")
+local exit = Instance.new("TextButton")
+local minizum = Instance.new("TextButton")
+local stop = Instance.new("TextButton")
+local uiCorner4 = Instance.new("UICorner")
+local iy = Instance.new("TextButton")
+local uiCorner5 = Instance.new("UICorner")
+local textLabel2 = Instance.new("TextLabel")
+local waitSpeedBox = Instance.new("TextBox")
+
+screenGui.Name = ". Ǥ҉̷҉̵҉̸҉̷҉̵҉̸҉̡҉̡҉̼҉̱҉͎҉͎҉̞҉̼҉̱҉͎҉͎҉̞҉ͤ҉ͬ҉̅҉ͤ҉ͬ"
+screenGui.Parent = coreGui
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.ResetOnSpawn = false
+
+frame.Name = "Ǥ҉̷҉̵҉̸҉̷҉̵҉̸҉̡҉̡҉̼҉̱҉͎҉͎҉̞҉̼҉̱҉͎҉͎҉̞҉ͤ҉ͬ҉̅҉ͤ҉ͬ."
+frame.Parent = screenGui
+frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+frame.BackgroundTransparency = 1
+frame.BorderSizePixel = 0
+frame.Position = UDim2.new(0.35026139, 0, 0.296158612, 0)
+frame.Size = UDim2.new(0, 438, 0, 277)
+
+frame2.Name = ". . Ǥ҉̷҉̵҉̸҉̷҉̵҉̸҉̡҉̡҉̼҉̱҉͎҉͎҉̞҉̼҉̱҉͎҉͎҉̞҉ͤ҉ͬ҉̅҉ͤ҉ͬ. "
+frame2.Parent = frame
+frame2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+frame2.BackgroundTransparency = 1
+frame2.BorderColor3 = Color3.fromRGB(27, 42, 53)
+frame2.BorderSizePixel = 0
+frame2.Position = UDim2.new(-0.00133678317, 0, -0.00348037481, 0)
+frame2.Size = UDim2.new(0, 438, 0, 277)
+
+frame3.Name = " . Ǥ҉̷҉̵҉̸҉̷҉̵҉̸҉̡҉̡҉̼҉̱҉͎҉͎҉̞҉̼҉̱҉͎҉͎҉̞҉ͤ҉ͬ҉̅҉ͤ҉ͬ. "
+frame3.Parent = frame2
+frame3.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+frame3.BorderColor3 = Color3.fromRGB(27, 42, 53)
+frame3.BorderSizePixel = 0
+frame3.Position = UDim2.new(-0.00133678142, 0, -0.0179207586, 0)
+frame3.Size = UDim2.new(0, 438, 0, 238)
+frame3.Active = true
+frame3.Draggable = false
+
+rfeStatusLabel.Name = "Time"
+rfeStatusLabel.Parent = frame3
+rfeStatusLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+rfeStatusLabel.BackgroundTransparency = 1
+rfeStatusLabel.Position = UDim2.new(0, 0, 0.0126050422, 0)
+rfeStatusLabel.Size = UDim2.new(0, 437, 0, 31)
+rfeStatusLabel.Font = Enum.Font.GothamSemibold
+rfeStatusLabel.Text = "RespectFilteringEnabled(RFE) : nil"
+rfeStatusLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+rfeStatusLabel.TextScaled = true
+rfeStatusLabel.TextSize = 14
+rfeStatusLabel.TextWrapped = true
+
+textButton.Name = "1E"
+textButton.Parent = frame3
+textButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+textButton.BorderSizePixel = 0
+textButton.Position = UDim2.new(0.0182648394, 0, 0.676470578, 0)
+textButton.Size = UDim2.new(0, 208, 0, 33)
+textButton.Font = Enum.Font.SourceSans
+textButton.Text = "Mute Game"
+textButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+textButton.TextScaled = true
+textButton.TextSize = 30
+textButton.TextWrapped = true
+
+uiCorner.Parent = textButton
+
+textButton2.Name = "3E"
+textButton2.Parent = frame3
+textButton2.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+textButton2.BorderSizePixel = 0
+textButton2.Position = UDim2.new(0.0159817357, 0, 0.142857149, 0)
+textButton2.Size = UDim2.new(0, 209, 0, 33)
+textButton2.Font = Enum.Font.SourceSans
+textButton2.Text = "Annoying  Sound"
+textButton2.TextColor3 = Color3.fromRGB(255, 255, 255)
+textButton2.TextSize = 30
+textButton2.TextWrapped = true
+
+uiCorner2.Parent = textButton2
+
+se.Name = "SE"
+se.Parent = frame3
+se.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+se.BorderSizePixel = 0
+se.Position = UDim2.new(0.509132445, 0, 0.142857149, 0)
+se.Size = UDim2.new(0, 209, 0, 33)
+se.Font = Enum.Font.SourceSans
+se.Text = "Kill Sound Service"
+se.TextColor3 = Color3.fromRGB(255, 255, 255)
+se.TextSize = 30
+se.TextWrapped = true
+
+uiCorner3.Parent = se
+
+path.Name = "Path"
+path.Parent = frame3
+path.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+path.BackgroundTransparency = 1
+path.Position = UDim2.new(0.00684931502, 0, 0.815126061, 0)
+path.Size = UDim2.new(0, 435, 0, 44)
+path.Font = Enum.Font.GothamSemibold
+path.Text = "Dev Note : This Script is FE and it only FE when RespectFilteringEnabled(RFE) is disabled , elseif RespectFilteringEnabled(RFE) is true then it only be client , mostly RespectFilteringEnabled(RFE) disabled game are classic game"
+path.TextColor3 = Color3.fromRGB(255, 0, 0)
+path.TextScaled = true
+path.TextSize = 14
+path.TextWrapped = true
+
+top.Name = "Top"
+top.Parent = frame3
+top.BackgroundColor3 = Color3.fromRGB(41, 60, 157)
+top.BorderColor3 = Color3.fromRGB(27, 42, 53)
+top.BorderSizePixel = 0
+top.Position = UDim2.new(-0.00133678142, 0, -0.128059402, 0)
+top.Size = UDim2.new(0, 438, 0, 30)
+
+top2.Name = "Top"
+top2.Parent = top
+top2.BackgroundColor3 = Color3.fromRGB(30, 45, 118)
+top2.BorderColor3 = Color3.fromRGB(27, 42, 53)
+top2.BorderSizePixel = 0
+top2.Position = UDim2.new(0, 0, 0.967638671, 0)
+top2.Size = UDim2.new(0, 438, 0, 5)
+
+imageLabel.Parent = top
+imageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+imageLabel.BackgroundTransparency = 1
+imageLabel.Position = UDim2.new(0, 0, 0.0666666701, 0)
+imageLabel.Size = UDim2.new(0, 29, 0, 27)
+imageLabel.Image = "http://www.roblox.com/asset/?id=8798286232"
+
+textLabel.Parent = imageLabel
+textLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+textLabel.BackgroundTransparency = 1
+textLabel.Position = UDim2.new(0.997245014, 0, 0, 0)
+textLabel.Size = UDim2.new(0, 397, 0, 30)
+textLabel.Font = Enum.Font.GothamSemibold
+textLabel.Text = "FEAG"
+textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+textLabel.TextScaled = true
+textLabel.TextSize = 14
+textLabel.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+textLabel.TextWrapped = true
+
+
+exit.Name = "Exit"
+exit.Parent = top
+exit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+exit.BackgroundTransparency = 1
+exit.Position = UDim2.new(0.924657524, 0, 0, 0)
+exit.Size = UDim2.new(0, 32, 0, 25)
+exit.Font = Enum.Font.GothamSemibold
+exit.Text = "x"
+exit.TextColor3 = Color3.fromRGB(255, 255, 255)
+exit.TextScaled = true
+exit.TextSize = 14
+exit.TextWrapped = true
+
+minizum.Name = "Minizum"
+minizum.Parent = top
+minizum.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+minizum.BackgroundTransparency = 1
+minizum.Position = UDim2.new(0.851598203, 0, 0, 0)
+minizum.Size = UDim2.new(0, 32, 0, 23)
+minizum.Font = Enum.Font.GothamSemibold
+minizum.Text = "_"
+minizum.TextColor3 = Color3.fromRGB(255, 255, 255)
+minizum.TextScaled = true
+minizum.TextSize = 14
+minizum.TextWrapped = true
+
+stop.Name = "Stop"
+stop.Parent = frame3
+stop.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+stop.BorderSizePixel = 0
+stop.Position = UDim2.new(0.0182648394, 0, 0.310924381, 0)
+stop.Size = UDim2.new(0, 424, 0, 33)
+stop.Font = Enum.Font.SourceSans
+stop.Text = "Stop"
+stop.TextColor3 = Color3.fromRGB(255, 255, 255)
+stop.TextSize = 30
+stop.TextWrapped = true
+
+uiCorner4.Parent = stop
+
+iy.Name = "IY"
+iy.Parent = frame3
+iy.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+iy.BorderSizePixel = 0
+iy.Position = UDim2.new(0.509132445, 0, 0.676470578, 0)
+iy.Size = UDim2.new(0, 209, 0, 33)
+iy.Font = Enum.Font.SourceSans
+iy.Text = "Unmute Game"
+iy.TextColor3 = Color3.fromRGB(255, 255, 255)
+iy.TextScaled = true
+iy.TextSize = 30
+iy.TextWrapped = true
+
+uiCorner5.Parent = iy
+
+textLabel2.Parent = frame3
+textLabel2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+textLabel2.BackgroundTransparency = 1
+textLabel2.Position = UDim2.new(0.0182648394, 0, 0.466386557, 0)
+textLabel2.Size = UDim2.new(0, 426, 0, 50)
+textLabel2.Font = Enum.Font.GothamSemibold
+textLabel2.Text = "Wait Speed       :"
+textLabel2.TextColor3 = Color3.fromRGB(255, 255, 255)
+textLabel2.TextSize = 30
+textLabel2.TextWrapped = true
+textLabel2.TextXAlignment = Enum.TextXAlignment.Left
+
+waitSpeedBox.Name = "Wait()"
+waitSpeedBox.Parent = frame3
+waitSpeedBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+waitSpeedBox.BackgroundTransparency = 1
+waitSpeedBox.Position = UDim2.new(0.531963468, 0, 0.466386557, 0)
+waitSpeedBox.Size = UDim2.new(0, 199, 0, 50)
+waitSpeedBox.ZIndex = 99999
+waitSpeedBox.ClearTextOnFocus = false
+waitSpeedBox.Font = Enum.Font.GothamSemibold
+waitSpeedBox.Text = "0.5"
+waitSpeedBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+waitSpeedBox.TextSize = 30
+waitSpeedBox.TextWrapped = true
+
+local sound = Instance.new("Sound")
+sound.Parent = soundService
+sound.SoundId = "rbxassetid://9086208751"
+sound.Volume = 5
+sound.Name = ". Ǥ҉̷҉̵҉̸҉̷҉̵҉̸҉̡҉̡҉̼҉̱҉͎҉͎҉̞҉̼҉̱҉͎҉͎҉̞҉ͤ҉ͬ҉̅҉ͤ҉ͬ"
+
+exit.MouseButton1Click:Connect(function() screenGui:Destroy() end)
+
+
+local muteLoopActive = false
+iy.MouseButton1Click:Connect(function() muteLoopActive = false end)
+
+textButton.MouseButton1Click:Connect(function()
+  muteLoopActive = true
+
+  while muteLoopActive == true do
+    wait()
+    local descendants, nextDescendant = workspace:GetDescendants()
+
+    for index, descendant in next, descendants, nextDescendant do
+      if descendant:IsA("Sound") then
+        descendant:Stop()
+      end
+    end
+  end
+end)
+
+textButton2.MouseButton1Click:Connect(function()
+  local descendants, nextDescendant = workspace:GetDescendants()
+
+  for index, descendant in next, descendants, nextDescendant do
+    if descendant:IsA("Sound") then
+      descendant:Play()
+    end
+  end
+end)
+
+
+local soundSpamActive = true
+
+se.MouseButton1Click:Connect(function()
+  soundSpamActive = true
+
+  while soundSpamActive == true do
+    wait(waitSpeedBox.Text)
+    local descendants, nextDescendant = workspace:GetDescendants()
+
+    for index, descendant in next, descendants, nextDescendant do
+      if descendant:IsA("Sound") then
+        descendant:Play()
+      end
+    end
+  end
+end)
+
+stop.MouseButton1Click:Connect(function() soundSpamActive = false end)
+sound:Play()
+
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+
+local isMinimized = false
+
+minizum.MouseButton1Click:Connect(function()
+    isMinimized = not isMinimized
+
+    for _, child in ipairs(frame3:GetChildren()) do
+        if child ~= top and not child:IsA("UICorner") then
+            child.Visible = not isMinimized
+        end
+    end
+
+
+    frame3.BackgroundTransparency = isMinimized and 1 or 0
+    frame3.Active = not isMinimized
+    
+
+    minizum.Text = isMinimized and "+" or "_"
+end)
+
+
+local function enableSmoothDragging(dragBar, mainFrame)
+    local dragging = false
+    local dragInput = nil
+    local dragStart = nil
+    local startPos = nil
+
+
+    local tweenInfo = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+    local function update(input)
+        local delta = input.Position - dragStart
+        local targetPosition = UDim2.new(
+            startPos.X.Scale, 
+            startPos.X.Offset + delta.X, 
+            startPos.Y.Scale, 
+            startPos.Y.Offset + delta.Y
+        )
+        
+        TweenService:Create(mainFrame, tweenInfo, { Position = targetPosition }):Play()
+    end
+
+    dragBar.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = mainFrame.Position
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    dragBar.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            update(input)
+        end
+    end)
+end
+
+enableSmoothDragging(top, frame)
+
+while true do
+  wait(0.5)
+  local respectFilteringEnabled = soundService.RespectFilteringEnabled
+
+  if respectFilteringEnabled == true then
+    rfeStatusLabel.TextColor = BrickColor.new(255, 0, 0)
+    rfeStatusLabel.Text = "RespectFilteringEnabled(RFE) : true"
+  elseif respectFilteringEnabled == false then
+    rfeStatusLabel.Text = "RespectFilteringEnabled(RFE) : false"
+    rfeStatusLabel.TextColor = BrickColor.new(0, 255, 0)
+  end
+end
