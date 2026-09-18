@@ -1,0 +1,366 @@
+-- this will always be open source
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+local targetGui
+local success = pcall(function()
+	targetGui = game:GetService("CoreGui")
+end)
+
+if not success or not targetGui then
+	targetGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+end
+
+local oldGui = targetGui:FindFirstChild("FEAG_Loader")
+if oldGui then
+	oldGui:Destroy()
+end
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "FEAG_Loader"
+screenGui.Parent = targetGui
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.ResetOnSpawn = false
+
+local mainFrame = Instance.new("CanvasGroup")
+mainFrame.Name = "MainFrame"
+mainFrame.Parent = screenGui
+mainFrame.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
+mainFrame.BackgroundTransparency = 0.15
+mainFrame.BorderSizePixel = 0
+mainFrame.Position = UDim2.new(0.5, -200, 0.5, -140) 
+mainFrame.Size = UDim2.new(0, 400, 0, 280)
+Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 14)
+
+local mainStroke = Instance.new("UIStroke")
+mainStroke.Color = Color3.fromRGB(255, 255, 255)
+mainStroke.Transparency = 0.85
+mainStroke.Thickness = 1
+mainStroke.Parent = mainFrame
+
+local topBar = Instance.new("Frame")
+topBar.Name = "TopBar"
+topBar.Parent = mainFrame
+topBar.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
+topBar.BackgroundTransparency = 0.2
+topBar.BorderSizePixel = 0
+topBar.Size = UDim2.new(1, 0, 0, 42)
+topBar.ZIndex = 10
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Name = "Title"
+titleLabel.Parent = topBar
+titleLabel.BackgroundTransparency = 1
+titleLabel.Position = UDim2.new(0, 16, 0, 0)
+titleLabel.Size = UDim2.new(0, 300, 1, 0)
+titleLabel.Font = Enum.Font.GothamBold
+titleLabel.Text = "Sounds Abuse FE Loader 1.1"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.TextSize = 16
+titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+titleLabel.ZIndex = 11
+
+local mainPage = Instance.new("Frame")
+mainPage.Name = "MainPage"
+mainPage.Parent = mainFrame
+mainPage.BackgroundTransparency = 1
+mainPage.Position = UDim2.new(0, 20, 0, 60) 
+mainPage.Size = UDim2.new(1, -40, 1, -80)
+
+local dropdownButton = Instance.new("TextButton")
+dropdownButton.Name = "DropdownButton"
+dropdownButton.Parent = mainPage
+dropdownButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+dropdownButton.BackgroundTransparency = 0.88
+dropdownButton.BorderSizePixel = 0
+dropdownButton.Size = UDim2.new(1, 0, 0, 34)
+dropdownButton.Font = Enum.Font.GothamSemibold
+dropdownButton.Text = ""
+dropdownButton.AutoButtonColor = false
+dropdownButton.ZIndex = 5
+Instance.new("UICorner", dropdownButton).CornerRadius = UDim.new(0, 8)
+
+local dropdownText = Instance.new("TextLabel")
+dropdownText.Name = "Text"
+dropdownText.Parent = dropdownButton
+dropdownText.BackgroundTransparency = 1
+dropdownText.Position = UDim2.new(0, 12, 0, 0)
+dropdownText.Size = UDim2.new(1, -40, 1, 0)
+dropdownText.Font = Enum.Font.GothamSemibold
+dropdownText.Text = "Select script version to load"
+dropdownText.TextColor3 = Color3.fromRGB(255, 255, 255)
+dropdownText.TextSize = 13
+dropdownText.TextXAlignment = Enum.TextXAlignment.Left
+dropdownText.ZIndex = 6
+
+local dropdownArrow = Instance.new("TextLabel")
+dropdownArrow.Name = "Arrow"
+dropdownArrow.Parent = dropdownButton
+dropdownArrow.BackgroundTransparency = 1
+dropdownArrow.Position = UDim2.new(1, -30, 0, 0)
+dropdownArrow.Size = UDim2.new(0, 24, 1, 0)
+dropdownArrow.Font = Enum.Font.GothamBold
+dropdownArrow.Text = "▼"
+dropdownArrow.TextColor3 = Color3.fromRGB(200, 205, 210)
+dropdownArrow.TextSize = 12
+dropdownArrow.ZIndex = 6
+
+local dropdownList = Instance.new("Frame")
+dropdownList.Name = "DropdownList"
+dropdownList.Parent = mainPage
+dropdownList.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
+dropdownList.BackgroundTransparency = 0.05
+dropdownList.BorderSizePixel = 0
+dropdownList.Position = UDim2.new(0, 0, 0, 38)
+dropdownList.Size = UDim2.new(1, 0, 0, 0)
+dropdownList.ClipsDescendants = true
+dropdownList.Visible = false
+dropdownList.ZIndex = 20
+Instance.new("UICorner", dropdownList).CornerRadius = UDim.new(0, 8)
+
+local listStroke = Instance.new("UIStroke")
+listStroke.Color = Color3.fromRGB(255, 255, 255)
+listStroke.Transparency = 0.8
+listStroke.Thickness = 1
+listStroke.Parent = dropdownList
+
+local listPadding = Instance.new("UIPadding")
+listPadding.Parent = dropdownList
+listPadding.PaddingTop = UDim.new(0, 6)
+listPadding.PaddingBottom = UDim.new(0, 6)
+listPadding.PaddingLeft = UDim.new(0, 6)
+listPadding.PaddingRight = UDim.new(0, 6)
+
+local listItems = Instance.new("Frame")
+listItems.Name = "Items"
+listItems.Parent = dropdownList
+listItems.BackgroundTransparency = 1
+listItems.Size = UDim2.new(1, 0, 0, 0)
+listItems.ZIndex = 21
+
+local itemsLayout = Instance.new("UIListLayout")
+itemsLayout.Parent = listItems
+itemsLayout.Padding = UDim.new(0, 4)
+itemsLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+itemsLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	listItems.Size = UDim2.new(1, 0, 0, itemsLayout.AbsoluteContentSize.Y)
+end)
+
+local option1 = Instance.new("TextButton")
+option1.Name = "Option1"
+option1.Parent = listItems
+option1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+option1.BackgroundTransparency = 0.9
+option1.BorderSizePixel = 0
+option1.Size = UDim2.new(1, 0, 0, 40)
+option1.Font = Enum.Font.GothamSemibold
+option1.Text = "▶  Load Last Version Script"
+option1.TextColor3 = Color3.fromRGB(255, 255, 255)
+option1.TextSize = 14
+option1.LayoutOrder = 1
+option1.ZIndex = 22
+Instance.new("UICorner", option1).CornerRadius = UDim.new(0, 8)
+
+local option2 = Instance.new("TextButton")
+option2.Name = "Option2"
+option2.Parent = listItems
+option2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+option2.BackgroundTransparency = 0.9
+option2.BorderSizePixel = 0
+option2.Size = UDim2.new(1, 0, 0, 40)
+option2.Font = Enum.Font.GothamSemibold
+option2.Text = "▶  Load 1.0 Version Script(old ui)"
+option2.TextColor3 = Color3.fromRGB(255, 255, 255)
+option2.TextSize = 14
+option2.LayoutOrder = 2
+option2.ZIndex = 22
+Instance.new("UICorner", option2).CornerRadius = UDim.new(0, 8)
+
+local statusLabel = Instance.new("TextLabel")
+statusLabel.Name = "Status"
+statusLabel.Parent = mainPage
+statusLabel.BackgroundTransparency = 1
+statusLabel.Position = UDim2.new(0, 0, 0, 42)
+statusLabel.Size = UDim2.new(1, 0, 0, 20)
+statusLabel.Font = Enum.Font.GothamSemibold
+statusLabel.Text = ""
+statusLabel.TextColor3 = Color3.fromRGB(52, 211, 153)
+statusLabel.TextSize = 12
+
+local GithubRow = Instance.new("Frame")
+GithubRow.Name = "GithubRow"
+GithubRow.Parent = mainPage
+GithubRow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+GithubRow.BackgroundTransparency = 0.92
+GithubRow.Position = UDim2.new(0, 0, 1, -40) -- Размещаем в самом низу mainPage
+GithubRow.Size = UDim2.new(1, 0, 0, 40)
+Instance.new("UICorner", GithubRow).CornerRadius = UDim.new(0, 8)
+
+local GithubLabel = Instance.new("TextLabel")
+GithubLabel.Name = "Label"
+GithubLabel.Parent = GithubRow
+GithubLabel.BackgroundTransparency = 1
+GithubLabel.Position = UDim2.new(0, 75, 0, -50)
+GithubLabel.Size = UDim2.new(0.65, 0, 1, 0)
+GithubLabel.Font = Enum.Font.GothamSemibold
+GithubLabel.Text = "Check out repository(open source)"
+GithubLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+GithubLabel.TextSize = 12
+GithubLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local GithubLabel = Instance.new("TextLabel")
+GithubLabel.Name = "Label"
+GithubLabel.Parent = GithubRow
+GithubLabel.BackgroundTransparency = 1
+GithubLabel.Position = UDim2.new(0, 175, 0, -35)
+GithubLabel.Size = UDim2.new(0.65, 0, 1, 0)
+GithubLabel.Font = Enum.Font.GothamSemibold
+GithubLabel.Text = "↓"
+GithubLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+GithubLabel.TextSize = 25
+GithubLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local GithubBox = Instance.new("TextBox")
+GithubBox.Name = "WaitSpeed"
+GithubBox.Parent = GithubRow
+GithubBox.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
+GithubBox.BackgroundTransparency = 0.2
+GithubBox.Position = UDim2.new(-0.01, 8, 0.5, -13)
+GithubBox.Size = UDim2.new(1, -8, 0, 26)
+GithubBox.ClearTextOnFocus = false
+GithubBox.TextEditable = false -- Делает текст-бокс неизменяемым
+GithubBox.Font = Enum.Font.GothamSemibold
+GithubBox.Text = "https://github.com/Tweety0ff/RobloxMusicRFEAbuse"
+GithubBox.TextColor3 = Color3.fromRGB(52, 211, 153)
+GithubBox.TextSize = 14
+Instance.new("UICorner", GithubBox).CornerRadius = UDim.new(0, 8)
+
+local function closeGuiAnimation()
+	local tweenInfo = TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In)
+	
+	local closeTween = TweenService:Create(mainFrame, tweenInfo, {
+		GroupTransparency = 1,
+		Size = UDim2.new(0, 1, 0, 1)
+	})
+	
+	closeTween:Play()
+	
+	closeTween.Completed:Connect(function()
+		if screenGui then
+			screenGui:Destroy()
+		end
+	end)
+end
+
+local function loadScript1()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/Last"))()
+	task.delay(0.01, closeGuiAnimation)
+end
+--idk why but it doesnt work when task delay is lower than line 216, im too lazy to fix that
+local function loadScript2()
+    task.delay(0.01, closeGuiAnimation)
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/1.0(old%20ui)"))()
+    screenGui:Destroy()
+end
+
+local statusToken = 0
+local function showStatus(text)
+	local token = statusToken + 1
+	statusToken = token
+	statusLabel.Text = text
+	task.delay(3, function()
+		if statusToken == token then
+			statusLabel.Text = ""
+		end
+	end)
+end
+
+local dropdownOpen = false
+
+local function setDropdown(open)
+	dropdownOpen = open
+	dropdownArrow.Text = open and "▲" or "▼"
+
+	if open then
+		dropdownList.Visible = true
+		local targetHeight = listItems.Size.Y.Offset + listPadding.PaddingTop.Offset + listPadding.PaddingBottom.Offset
+		
+		dropdownList.Size = UDim2.new(1, 0, 0, 0)
+		TweenService:Create(dropdownList, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Size = UDim2.new(1, 0, 0, targetHeight)
+		}):Play()
+	else
+		TweenService:Create(dropdownList, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+			Size = UDim2.new(1, 0, 0, 0)
+		}):Play()
+		task.delay(0.15, function()
+			if not dropdownOpen then
+				dropdownList.Visible = false
+			end
+		end)
+	end
+end
+
+dropdownButton.MouseButton1Click:Connect(function()
+	setDropdown(not dropdownOpen)
+end)
+
+option1.MouseButton1Click:Connect(function()
+	loadScript1()
+	showStatus("Last Version Loaded ✓")
+	dropdownText.Text = "Load Last Version"
+	setDropdown(false)
+end)
+
+option2.MouseButton1Click:Connect(function()
+	loadScript2()
+	showStatus("Version 1.0 Loaded ✓")
+	dropdownText.Text = "Load 1.0(old ui)"
+	setDropdown(false)
+end)
+
+local function enableSmoothDragging(dragBar, frame)
+	local dragging = false
+	local dragInput = nil
+	local dragStart = nil
+	local startPos = nil
+
+	local tweenInfo = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+	dragBar.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = frame.Position
+		end
+	end)
+
+	UserInputService.InputEnded:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = false
+		end
+	end)
+
+	dragBar.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			local delta = input.Position - dragStart
+			local targetPosition = UDim2.new(
+				startPos.X.Scale,
+				startPos.X.Offset + delta.X,
+				startPos.Y.Scale,
+				startPos.Y.Offset + delta.Y
+			)
+			TweenService:Create(frame, tweenInfo, { Position = targetPosition }):Play()
+		end
+	end)
+end
+
+enableSmoothDragging(topBar, mainFrame)
