@@ -1,617 +1,529 @@
---this will always be open source
-local TweenService = game:GetService("TweenService")
-local UserInputService = game:GetService("UserInputService")
-local Players = game:GetService("Players")
+-- this will always be open source
+-- dont touch the ui elements order, it might break
+local ts = game:GetService("TweenService")
+local uis = game:GetService("UserInputService")
+local plrs = game:GetService("Players")
 
-local targetGui
-local success = pcall(function()
-	targetGui = game:GetService("CoreGui")
+local target_gui
+local s, err = pcall(function()
+	target_gui = game:GetService("CoreGui")
 end)
 
-if not success or not targetGui then
-	targetGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+if not s or not target_gui then
+	target_gui = plrs.LocalPlayer:WaitForChild("PlayerGui")
 end
 
-local oldGui = targetGui:FindFirstChild("FEAG_Loader")
-if oldGui then
-	oldGui:Destroy()
+if target_gui:FindFirstChild("FEAG_Loader") then
+	target_gui.FEAG_Loader:Destroy()
 end
 
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "FEAG_Loader"
-screenGui.Parent = targetGui
-screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-screenGui.ResetOnSpawn = false
+local scr = Instance.new("ScreenGui")
+scr.Name = "FEAG_Loader"
+scr.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+scr.ResetOnSpawn = false
+scr.Parent = target_gui
 
-local mainFrame = Instance.new("CanvasGroup")
-mainFrame.Name = "MainFrame"
-mainFrame.Parent = screenGui
-mainFrame.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
-mainFrame.BackgroundTransparency = 0.15
-mainFrame.BorderSizePixel = 0
-mainFrame.Position = UDim2.new(0.5, -200, 0.5, -140) 
-mainFrame.Size = UDim2.new(0, 400, 0, 500)
-Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 14)
+local mainFr = Instance.new("CanvasGroup", scr)
+mainFr.Position = UDim2.new(0.5, -200, 0.5, -140) 
+mainFr.Name = "MainFrame_hi"
+mainFr.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
+mainFr.Size = UDim2.new(0, 400, 0, 500)
+mainFr.BackgroundTransparency = 0.15
+mainFr.BorderSizePixel = 0
+Instance.new("UICorner", mainFr).CornerRadius = UDim.new(0, 14)
 
-local mainStroke = Instance.new("UIStroke")
-mainStroke.Color = Color3.fromRGB(255, 255, 255)
-mainStroke.Transparency = 0.85
-mainStroke.Thickness = 1
-mainStroke.Parent = mainFrame
+local stroke1 = Instance.new("UIStroke", mainFr)
+stroke1.Transparency = 0.85
+stroke1.Thickness = 1
+stroke1.Color = Color3.fromRGB(255, 255, 255)
 
 local topBar = Instance.new("Frame")
-topBar.Name = "TopBar"
-topBar.Parent = mainFrame
-topBar.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
-topBar.BackgroundTransparency = 0.2
-topBar.BorderSizePixel = 0
+topBar.Parent = mainFr
 topBar.Size = UDim2.new(1, 0, 0, 42)
+topBar.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
+topBar.Name = "TopBar"
 topBar.ZIndex = 10
+topBar.BorderSizePixel = 0
+topBar.BackgroundTransparency = 0.2
 
-local titleLabel = Instance.new("TextLabel")
-titleLabel.Name = "Title"
-titleLabel.Parent = topBar
-titleLabel.BackgroundTransparency = 1
-titleLabel.Position = UDim2.new(0, 16, 0, 0)
-titleLabel.Size = UDim2.new(0, 300, 1, 0)
-titleLabel.Font = Enum.Font.GothamBold
-titleLabel.Text = "Sounds Abuse FE Loader 1.2"
-titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-titleLabel.TextSize = 16
-titleLabel.TextXAlignment = Enum.TextXAlignment.Left
-titleLabel.ZIndex = 11
+local lblTitle = Instance.new("TextLabel")
+lblTitle.Name = "Title"
+lblTitle.Size = UDim2.new(0, 300, 1, 0)
+lblTitle.Text = "Sounds Abuse FE Loader 1.2"
+lblTitle.Position = UDim2.new(0, 16, 0, 0)
+lblTitle.Font = Enum.Font.GothamBold
+lblTitle.TextSize = 16
+lblTitle.BackgroundTransparency = 1
+lblTitle.Parent = topBar
+lblTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+lblTitle.TextXAlignment = Enum.TextXAlignment.Left
+lblTitle.ZIndex = 11
 
-local mainPage = Instance.new("Frame")
-mainPage.Name = "MainPage"
-mainPage.Parent = mainFrame
-mainPage.BackgroundTransparency = 1
-mainPage.Position = UDim2.new(0, 20, 0, 60) 
-mainPage.Size = UDim2.new(1, -40, 1, -80)
+local page = Instance.new("Frame", mainFr)
+page.Name = "MainPage"
+page.Position = UDim2.new(0, 20, 0, 60) 
+page.Size = UDim2.new(1, -40, 1, -80)
+page.BackgroundTransparency = 1
 
-local dropdownButton = Instance.new("TextButton")
-dropdownButton.Name = "DropdownButton"
-dropdownButton.Parent = mainPage
-dropdownButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-dropdownButton.BackgroundTransparency = 0.88
-dropdownButton.BorderSizePixel = 0
-dropdownButton.Size = UDim2.new(1, 0, 0, 34)
-dropdownButton.Font = Enum.Font.GothamSemibold
-dropdownButton.Text = ""
-dropdownButton.AutoButtonColor = false
-dropdownButton.ZIndex = 5
-Instance.new("UICorner", dropdownButton).CornerRadius = UDim.new(0, 8)
+local DropdownBtn1 = Instance.new("TextButton", page)
+DropdownBtn1.Name = "DropdownButton1"
+DropdownBtn1.BackgroundTransparency = 0.88
+DropdownBtn1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+DropdownBtn1.Font = Enum.Font.GothamSemibold
+DropdownBtn1.Text = ""
+DropdownBtn1.Size = UDim2.new(1, 0, 0, 34)
+DropdownBtn1.BorderSizePixel = 0
+DropdownBtn1.AutoButtonColor = false
+DropdownBtn1.ZIndex = 5
+Instance.new("UICorner", DropdownBtn1).CornerRadius = UDim.new(0, 8)
 
-local dropdownText = Instance.new("TextLabel")
-dropdownText.Name = "Text"
-dropdownText.Parent = dropdownButton
-dropdownText.BackgroundTransparency = 1
-dropdownText.Position = UDim2.new(0, 12, 0, 0)
-dropdownText.Size = UDim2.new(1, -40, 1, 0)
-dropdownText.Font = Enum.Font.GothamSemibold
-dropdownText.Text = "Select script version to load"
-dropdownText.TextColor3 = Color3.fromRGB(255, 255, 255)
-dropdownText.TextSize = 13
-dropdownText.TextXAlignment = Enum.TextXAlignment.Left
-dropdownText.ZIndex = 6
+local ddTxt1 = Instance.new("TextLabel", DropdownBtn1)
+ddTxt1.Text = "Select script version to load"
+ddTxt1.Name = "Text"
+ddTxt1.Font = Enum.Font.GothamSemibold
+ddTxt1.Position = UDim2.new(0, 12, 0, 0)
+ddTxt1.Size = UDim2.new(1, -40, 1, 0)
+ddTxt1.BackgroundTransparency = 1
+ddTxt1.TextXAlignment = Enum.TextXAlignment.Left
+ddTxt1.TextSize = 13
+ddTxt1.TextColor3 = Color3.fromRGB(255, 255, 255)
+ddTxt1.ZIndex = 6
 
-local dropdownArrow = Instance.new("TextLabel")
-dropdownArrow.Name = "Arrow"
-dropdownArrow.Parent = dropdownButton
-dropdownArrow.BackgroundTransparency = 1
-dropdownArrow.Position = UDim2.new(1, -30, 0, 0)
-dropdownArrow.Size = UDim2.new(0, 24, 1, 0)
-dropdownArrow.Font = Enum.Font.GothamBold
-dropdownArrow.Text = "▼"
-dropdownArrow.TextColor3 = Color3.fromRGB(200, 205, 210)
-dropdownArrow.TextSize = 12
-dropdownArrow.ZIndex = 6
+local ddArr1 = Instance.new("TextLabel", DropdownBtn1)
+ddArr1.Text = "▼"
+ddArr1.Name = "Arrow"
+ddArr1.Position = UDim2.new(1, -30, 0, 0)
+ddArr1.Size = UDim2.new(0, 24, 1, 0)
+ddArr1.BackgroundTransparency = 1
+ddArr1.Font = Enum.Font.GothamBold
+ddArr1.TextColor3 = Color3.fromRGB(200, 205, 210)
+ddArr1.TextSize = 12
+ddArr1.ZIndex = 6
 
-local dropdownList = Instance.new("Frame")
-dropdownList.Name = "DropdownList"
-dropdownList.Parent = mainPage
-dropdownList.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
-dropdownList.BackgroundTransparency = 0.05
-dropdownList.BorderSizePixel = 0
-dropdownList.Position = UDim2.new(0, 0, 0, 38)
-dropdownList.Size = UDim2.new(1, 0, 0, 0)
-dropdownList.ClipsDescendants = true
-dropdownList.Visible = false
-dropdownList.ZIndex = 20
-Instance.new("UICorner", dropdownList).CornerRadius = UDim.new(0, 8)
+local list_frame = Instance.new("Frame", page)
+list_frame.Name = "DropdownList"
+list_frame.Size = UDim2.new(1, 0, 0, 0)
+list_frame.Position = UDim2.new(0, 0, 0, 38)
+list_frame.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
+list_frame.BackgroundTransparency = 0.05
+list_frame.BorderSizePixel = 0
+list_frame.ZIndex = 20
+list_frame.ClipsDescendants = true
+list_frame.Visible = false
+Instance.new("UICorner", list_frame).CornerRadius = UDim.new(0, 8)
 
-local listStroke = Instance.new("UIStroke")
-listStroke.Color = Color3.fromRGB(255, 255, 255)
-listStroke.Transparency = 0.8
-listStroke.Thickness = 1
-listStroke.Parent = dropdownList
+local l_stroke = Instance.new("UIStroke", list_frame)
+l_stroke.Transparency = 0.8
+l_stroke.Color = Color3.fromRGB(255, 255, 255)
+l_stroke.Thickness = 1
 
-local listPadding = Instance.new("UIPadding")
-listPadding.Parent = dropdownList
-listPadding.PaddingTop = UDim.new(0, 6)
-listPadding.PaddingBottom = UDim.new(0, 6)
-listPadding.PaddingLeft = UDim.new(0, 6)
-listPadding.PaddingRight = UDim.new(0, 6)
+local pad1 = Instance.new("UIPadding", list_frame)
+pad1.PaddingTop = UDim.new(0, 6)
+pad1.PaddingLeft = UDim.new(0, 6)
+pad1.PaddingRight = UDim.new(0, 6)
+pad1.PaddingBottom = UDim.new(0, 6)
 
-local listItems = Instance.new("Frame")
-listItems.Name = "Items"
-listItems.Parent = dropdownList
-listItems.BackgroundTransparency = 1
-listItems.Size = UDim2.new(1, 0, 0, 0)
-listItems.ZIndex = 21
+local items = Instance.new("Frame", list_frame)
+items.Name = "Items"
+items.Size = UDim2.new(1, 0, 0, 0)
+items.BackgroundTransparency = 1
+items.ZIndex = 21
 
-local itemsLayout = Instance.new("UIListLayout")
-itemsLayout.Parent = listItems
-itemsLayout.Padding = UDim.new(0, 4)
-itemsLayout.SortOrder = Enum.SortOrder.LayoutOrder
+local i_layout = Instance.new("UIListLayout", items)
+i_layout.SortOrder = Enum.SortOrder.LayoutOrder
+i_layout.Padding = UDim.new(0, 4)
 
-itemsLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-	listItems.Size = UDim2.new(1, 0, 0, itemsLayout.AbsoluteContentSize.Y)
+i_layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	items.Size = UDim2.new(1, 0, 0, i_layout.AbsoluteContentSize.Y)
 end)
 
-local LastVersion = Instance.new("TextButton")
-LastVersion.Name = "LastVersion"
-LastVersion.Parent = listItems
-LastVersion.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-LastVersion.BackgroundTransparency = 0.9
-LastVersion.BorderSizePixel = 0
-LastVersion.Size = UDim2.new(1, 0, 0, 40)
-LastVersion.Font = Enum.Font.GothamSemibold
-LastVersion.Text = "▶ Last Version Script"
-LastVersion.TextColor3 = Color3.fromRGB(255, 255, 255)
-LastVersion.TextSize = 14
-LastVersion.LayoutOrder = 1
-LastVersion.ZIndex = 22
-Instance.new("UICorner", LastVersion).CornerRadius = UDim.new(0, 8)
+local lastversionbutton = Instance.new("TextButton", items)
+lastversionbutton.Text = "▶ Last Version Script"
+lastversionbutton.Name = "LastVersion"
+lastversionbutton.Size = UDim2.new(1, 0, 0, 40)
+lastversionbutton.Font = Enum.Font.GothamSemibold
+lastversionbutton.BackgroundTransparency = 0.9
+lastversionbutton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+lastversionbutton.BorderSizePixel = 0
+lastversionbutton.TextColor3 = Color3.fromRGB(255, 255, 255)
+lastversionbutton.TextSize = 14
+lastversionbutton.LayoutOrder = 1
+lastversionbutton.ZIndex = 22
+Instance.new("UICorner", lastversionbutton).CornerRadius = UDim.new(0, 8)
 
-local OldVersion = Instance.new("TextButton")
-OldVersion.Name = "OldVersion"
-OldVersion.Parent = listItems
-OldVersion.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-OldVersion.BackgroundTransparency = 0.9
-OldVersion.BorderSizePixel = 0
-OldVersion.Size = UDim2.new(1, 0, 0, 40)
-OldVersion.Font = Enum.Font.GothamSemibold
-OldVersion.Text = "▶ 1.0 Version Script(old ui)"
-OldVersion.TextColor3 = Color3.fromRGB(255, 255, 255)
-OldVersion.TextSize = 14
-OldVersion.LayoutOrder = 2
-OldVersion.ZIndex = 22
-Instance.new("UICorner", OldVersion).CornerRadius = UDim.new(0, 8)
+local btnOldVer = Instance.new("TextButton", items)
+btnOldVer.Name = "OldVersion"
+btnOldVer.Text = "▶ 1.0 Version Script(old ui)"
+btnOldVer.Size = UDim2.new(1, 0, 0, 40)
+btnOldVer.Font = Enum.Font.GothamSemibold
+btnOldVer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+btnOldVer.BackgroundTransparency = 0.9
+btnOldVer.BorderSizePixel = 0
+btnOldVer.TextColor3 = Color3.fromRGB(255, 255, 255)
+btnOldVer.TextSize = 14
+btnOldVer.LayoutOrder = 2
+btnOldVer.ZIndex = 22
+Instance.new("UICorner", btnOldVer).CornerRadius = UDim.new(0, 8)
 
-local statusLabel = Instance.new("TextLabel")
-statusLabel.Name = "Status"
-statusLabel.Parent = mainPage
-statusLabel.BackgroundTransparency = 1
-statusLabel.Position = UDim2.new(0, 0, 0, 42)
-statusLabel.Size = UDim2.new(1, 0, 0, 20)
-statusLabel.Font = Enum.Font.GothamSemibold
-statusLabel.Text = ""
-statusLabel.TextColor3 = Color3.fromRGB(52, 211, 153)
-statusLabel.TextSize = 12
+local statLabel = Instance.new("TextLabel", page)
+statLabel.Name = "Status"
+statLabel.Size = UDim2.new(1, 0, 0, 20)
+statLabel.Position = UDim2.new(0, 0, 0, 42)
+statLabel.BackgroundTransparency = 1
+statLabel.Font = Enum.Font.GothamSemibold
+statLabel.Text = ""
+statLabel.TextSize = 12
+statLabel.TextColor3 = Color3.fromRGB(52, 211, 153)
 
-local ExecuteButton = Instance.new("TextButton")
-ExecuteButton.Name = "ExecuteButton"
-ExecuteButton.Parent = mainPage
-ExecuteButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ExecuteButton.BackgroundTransparency = 0.9
-ExecuteButton.BorderSizePixel = 0
-ExecuteButton.Position = UDim2.new(0, 0, 0.66, 1)
-ExecuteButton.Size = UDim2.new(1, 0, 0, 32)
-ExecuteButton.Font = Enum.Font.GothamSemibold
-ExecuteButton.Text = "Load Selected Script"
-ExecuteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ExecuteButton.TextSize = 13
-Instance.new("UICorner", ExecuteButton).CornerRadius = UDim.new(0, 8)
+local execBtn = Instance.new("TextButton", page)
+execBtn.Name = "ExecuteButton"
+execBtn.Position = UDim2.new(0, 0, 0.66, 1)
+execBtn.Size = UDim2.new(1, 0, 0, 32)
+execBtn.Text = "Load Selected Script"
+execBtn.Font = Enum.Font.GothamSemibold
+execBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+execBtn.BackgroundTransparency = 0.9
+execBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+execBtn.BorderSizePixel = 0
+execBtn.TextSize = 13
+Instance.new("UICorner", execBtn).CornerRadius = UDim.new(0, 8)
 
 
-local logsDropdownButton = Instance.new("TextButton")
-logsDropdownButton.Name = "LogsDropdownButton"
-logsDropdownButton.Parent = mainPage
-logsDropdownButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-logsDropdownButton.BackgroundTransparency = 0.88
-logsDropdownButton.BorderSizePixel = 0
-logsDropdownButton.Position = UDim2.new(0, 0, 0.33, 1)
-logsDropdownButton.Size = UDim2.new(1, 0, 0, 34)
-logsDropdownButton.Font = Enum.Font.GothamSemibold
-logsDropdownButton.Text = ""
-logsDropdownButton.AutoButtonColor = false
-logsDropdownButton.ZIndex = 5
-Instance.new("UICorner", logsDropdownButton).CornerRadius = UDim.new(0, 8)
+local logdropdownbutton = Instance.new("TextButton", page)
+logdropdownbutton.Name = "LogDropdownButton"
+logdropdownbutton.Size = UDim2.new(1, 0, 0, 34)
+logdropdownbutton.Position = UDim2.new(0, 0, 0.33, 1)
+logdropdownbutton.BackgroundTransparency = 0.88
+logdropdownbutton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+logdropdownbutton.Font = Enum.Font.GothamSemibold
+logdropdownbutton.Text = ""
+logdropdownbutton.BorderSizePixel = 0
+logdropdownbutton.AutoButtonColor = false
+logdropdownbutton.ZIndex = 5
+Instance.new("UICorner", logdropdownbutton).CornerRadius = UDim.new(0, 8)
 
-local logsDropdownText = Instance.new("TextLabel")
-logsDropdownText.Name = "Text"
-logsDropdownText.Parent = logsDropdownButton
-logsDropdownText.BackgroundTransparency = 1
-logsDropdownText.Position = UDim2.new(0, 12, 0, 0)
-logsDropdownText.Size = UDim2.new(1, -40, 1, 0)
-logsDropdownText.Font = Enum.Font.GothamSemibold
-logsDropdownText.Text = "Select Update Logs"
-logsDropdownText.TextColor3 = Color3.fromRGB(255, 255, 255)
-logsDropdownText.TextSize = 13
-logsDropdownText.TextXAlignment = Enum.TextXAlignment.Left
-logsDropdownText.ZIndex = 6
+local logDD_txt = Instance.new("TextLabel", logdropdownbutton)
+logDD_txt.Name = "Text"
+logDD_txt.Text = "Select Update Logs"
+logDD_txt.Size = UDim2.new(1, -40, 1, 0)
+logDD_txt.Position = UDim2.new(0, 12, 0, 0)
+logDD_txt.BackgroundTransparency = 1
+logDD_txt.Font = Enum.Font.GothamSemibold
+logDD_txt.TextColor3 = Color3.fromRGB(255, 255, 255)
+logDD_txt.TextSize = 13
+logDD_txt.TextXAlignment = Enum.TextXAlignment.Left
+logDD_txt.ZIndex = 6
 
-local logsDropdownArrow = Instance.new("TextLabel")
-logsDropdownArrow.Name = "Arrow"
-logsDropdownArrow.Parent = logsDropdownButton
-logsDropdownArrow.BackgroundTransparency = 1
-logsDropdownArrow.Position = UDim2.new(1, -30, 0, 0)
-logsDropdownArrow.Size = UDim2.new(0, 24, 1, 0)
-logsDropdownArrow.Font = Enum.Font.GothamBold
-logsDropdownArrow.Text = "▼"
-logsDropdownArrow.TextColor3 = Color3.fromRGB(200, 205, 210)
-logsDropdownArrow.TextSize = 12
-logsDropdownArrow.ZIndex = 6
+local logDD_arr = Instance.new("TextLabel", logdropdownbutton)
+logDD_arr.Name = "Arrow"
+logDD_arr.Text = "▼"
+logDD_arr.Size = UDim2.new(0, 24, 1, 0)
+logDD_arr.Position = UDim2.new(1, -30, 0, 0)
+logDD_arr.BackgroundTransparency = 1
+logDD_arr.Font = Enum.Font.GothamBold
+logDD_arr.TextColor3 = Color3.fromRGB(200, 205, 210)
+logDD_arr.TextSize = 12
+logDD_arr.ZIndex = 6
 
-local logsDropdownList = Instance.new("Frame")
-logsDropdownList.Name = "LogsDropdownList"
-logsDropdownList.Parent = mainPage
-logsDropdownList.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
-logsDropdownList.BackgroundTransparency = 0.05
-logsDropdownList.BorderSizePixel = 0
-logsDropdownList.Position = UDim2.new(0, 0, 0.33, 38)
-logsDropdownList.Size = UDim2.new(1, 0, 0, 0)
-logsDropdownList.ClipsDescendants = true
-logsDropdownList.Visible = false
-logsDropdownList.ZIndex = 20
-Instance.new("UICorner", logsDropdownList).CornerRadius = UDim.new(0, 8)
+local log_list = Instance.new("Frame", page)
+log_list.Name = "LogsDropdownList"
+log_list.Position = UDim2.new(0, 0, 0.33, 38)
+log_list.Size = UDim2.new(1, 0, 0, 0)
+log_list.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
+log_list.BackgroundTransparency = 0.05
+log_list.BorderSizePixel = 0
+log_list.ClipsDescendants = true
+log_list.Visible = false
+log_list.ZIndex = 20
+Instance.new("UICorner", log_list).CornerRadius = UDim.new(0, 8)
 
-local logsListStroke = Instance.new("UIStroke")
-logsListStroke.Color = Color3.fromRGB(255, 255, 255)
-logsListStroke.Transparency = 0.8
-logsListStroke.Thickness = 1
-logsListStroke.Parent = logsDropdownList
+local l_stroke2 = Instance.new("UIStroke", log_list)
+l_stroke2.Transparency = 0.8
+l_stroke2.Thickness = 1
+l_stroke2.Color = Color3.fromRGB(255, 255, 255)
 
-local logsListPadding = Instance.new("UIPadding")
-logsListPadding.Parent = logsDropdownList
-logsListPadding.PaddingTop = UDim.new(0, 6)
-logsListPadding.PaddingBottom = UDim.new(0, 6)
-logsListPadding.PaddingLeft = UDim.new(0, 6)
-logsListPadding.PaddingRight = UDim.new(0, 6)
+local pad2 = Instance.new("UIPadding", log_list)
+pad2.PaddingTop = UDim.new(0, 6)
+pad2.PaddingBottom = UDim.new(0, 6)
+pad2.PaddingLeft = UDim.new(0, 6)
+pad2.PaddingRight = UDim.new(0, 6)
 
-local logsListItems = Instance.new("Frame")
-logsListItems.Name = "Items"
-logsListItems.Parent = logsDropdownList
-logsListItems.BackgroundTransparency = 1
-logsListItems.Size = UDim2.new(1, 0, 0, 0)
-logsListItems.ZIndex = 21
+local log_items = Instance.new("Frame", log_list)
+log_items.Name = "Items"
+log_items.BackgroundTransparency = 1
+log_items.Size = UDim2.new(1, 0, 0, 0)
+log_items.ZIndex = 21
 
-local logsItemsLayout = Instance.new("UIListLayout")
-logsItemsLayout.Parent = logsListItems
-logsItemsLayout.Padding = UDim.new(0, 4)
-logsItemsLayout.SortOrder = Enum.SortOrder.LayoutOrder
+local lay2 = Instance.new("UIListLayout", log_items)
+lay2.Padding = UDim.new(0, 4)
+lay2.SortOrder = Enum.SortOrder.LayoutOrder
 
-logsItemsLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-	logsListItems.Size = UDim2.new(1, 0, 0, logsItemsLayout.AbsoluteContentSize.Y)
+lay2:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	log_items.Size = UDim2.new(1, 0, 0, lay2.AbsoluteContentSize.Y)
 end)
 
-local logLastVersion = Instance.new("TextButton")
-logLastVersion.Name = "LogLastVersion"
-logLastVersion.Parent = logsListItems
-logLastVersion.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-logLastVersion.BackgroundTransparency = 0.9
-logLastVersion.BorderSizePixel = 0
-logLastVersion.Size = UDim2.new(1, 0, 0, 40)
-logLastVersion.Font = Enum.Font.GothamSemibold
-logLastVersion.Text = "▶  Main Update Logs"
-logLastVersion.TextColor3 = Color3.fromRGB(255, 255, 255)
-logLastVersion.TextSize = 14
-logLastVersion.LayoutOrder = 1
-logLastVersion.ZIndex = 22
-Instance.new("UICorner", logLastVersion).CornerRadius = UDim.new(0, 8)
+local bLog1 = Instance.new("TextButton", log_items)
+bLog1.Name = "LogLastVersion"
+bLog1.Text = "▶  Main Update Logs"
+bLog1.Size = UDim2.new(1, 0, 0, 40)
+bLog1.BackgroundTransparency = 0.9
+bLog1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+bLog1.Font = Enum.Font.GothamSemibold
+bLog1.BorderSizePixel = 0
+bLog1.TextColor3 = Color3.fromRGB(255, 255, 255)
+bLog1.TextSize = 14
+bLog1.LayoutOrder = 1
+bLog1.ZIndex = 22
+Instance.new("UICorner", bLog1).CornerRadius = UDim.new(0, 8)
 
-local logOldVersion = Instance.new("TextButton")
-logOldVersion.Name = "LogOldVersion"
-logOldVersion.Parent = logsListItems
-logOldVersion.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-logOldVersion.BackgroundTransparency = 0.9
-logOldVersion.BorderSizePixel = 0
-logOldVersion.Size = UDim2.new(1, 0, 0, 40)
-logOldVersion.Font = Enum.Font.GothamSemibold
-logOldVersion.Text = "▶  Loader Update Logs"
-logOldVersion.TextColor3 = Color3.fromRGB(255, 255, 255)
-logOldVersion.TextSize = 14
-logOldVersion.LayoutOrder = 2
-logOldVersion.ZIndex = 22
-Instance.new("UICorner", logOldVersion).CornerRadius = UDim.new(0, 8)
+local bLog2 = Instance.new("TextButton", log_items)
+bLog2.Name = "LogOldVersion"
+bLog2.Text = "▶  Loader Update Logs"
+bLog2.Size = UDim2.new(1, 0, 0, 40)
+bLog2.Font = Enum.Font.GothamSemibold
+bLog2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+bLog2.BackgroundTransparency = 0.9
+bLog2.TextColor3 = Color3.fromRGB(255, 255, 255)
+bLog2.BorderSizePixel = 0
+bLog2.TextSize = 14
+bLog2.LayoutOrder = 2
+bLog2.ZIndex = 22
+Instance.new("UICorner", bLog2).CornerRadius = UDim.new(0, 8)
 
-
-local LoadLogsButton = Instance.new("TextButton")
-LoadLogsButton.Name = "LoadLogsButton"
-LoadLogsButton.Parent = mainPage
-LoadLogsButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-LoadLogsButton.BackgroundTransparency = 0.9
-LoadLogsButton.BorderSizePixel = 0
-LoadLogsButton.Position = UDim2.new(0, 0, 0.75, 1)
-LoadLogsButton.Size = UDim2.new(1, 0, 0, 32)
-LoadLogsButton.Font = Enum.Font.GothamSemibold
-LoadLogsButton.Text = "Load Selected Logs"
-LoadLogsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-LoadLogsButton.TextSize = 13
-Instance.new("UICorner", LoadLogsButton).CornerRadius = UDim.new(0, 8)
+local loadLogBtn = Instance.new("TextButton", page)
+loadLogBtn.Name = "LoadLogsButton"
+loadLogBtn.Position = UDim2.new(0, 0, 0.75, 1)
+loadLogBtn.Size = UDim2.new(1, 0, 0, 32)
+loadLogBtn.Text = "Load Selected Logs"
+loadLogBtn.BackgroundTransparency = 0.9
+loadLogBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+loadLogBtn.Font = Enum.Font.GothamSemibold
+loadLogBtn.BorderSizePixel = 0
+loadLogBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+loadLogBtn.TextSize = 13
+Instance.new("UICorner", loadLogBtn).CornerRadius = UDim.new(0, 8)
 
 
-local GithubRow = Instance.new("Frame")
-GithubRow.Name = "GithubRow"
-GithubRow.Parent = mainPage
-GithubRow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-GithubRow.BackgroundTransparency = 0.92
-GithubRow.Position = UDim2.new(0, 0, 1, -30)
-GithubRow.Size = UDim2.new(1, 0, 0, 40)
-Instance.new("UICorner", GithubRow).CornerRadius = UDim.new(0, 8)
+local ghRow = Instance.new("Frame", page)
+ghRow.Name = "GithubRow"
+ghRow.Size = UDim2.new(1, 0, 0, 40)
+ghRow.Position = UDim2.new(0, 0, 1, -30)
+ghRow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ghRow.BackgroundTransparency = 0.92
+Instance.new("UICorner", ghRow).CornerRadius = UDim.new(0, 8)
 
-local GithubLabel = Instance.new("TextLabel")
-GithubLabel.Name = "Label"
-GithubLabel.Parent = GithubRow
-GithubLabel.BackgroundTransparency = 1
-GithubLabel.Position = UDim2.new(0, 75, 0, -50)
-GithubLabel.Size = UDim2.new(0.65, 0, 1, 0)
-GithubLabel.Font = Enum.Font.GothamSemibold
-GithubLabel.Text = "Check out repository(open source)"
-GithubLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-GithubLabel.TextSize = 12
-GithubLabel.TextXAlignment = Enum.TextXAlignment.Left
+local ghLbl = Instance.new("TextLabel", ghRow)
+ghLbl.Name = "Label"
+ghLbl.Text = "Check out repository(open source)"
+ghLbl.Position = UDim2.new(0, 75, 0, -50)
+ghLbl.Size = UDim2.new(0.65, 0, 1, 0)
+ghLbl.BackgroundTransparency = 1
+ghLbl.Font = Enum.Font.GothamSemibold
+ghLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
+ghLbl.TextSize = 12
+ghLbl.TextXAlignment = Enum.TextXAlignment.Left
 
-local GithubArrow = Instance.new("TextLabel")
-GithubArrow.Name = "Arrow"
-GithubArrow.Parent = GithubRow
-GithubArrow.BackgroundTransparency = 1
-GithubArrow.Position = UDim2.new(0, 175, 0, -35)
-GithubArrow.Size = UDim2.new(0.65, 0, 1, 0)
-GithubArrow.Font = Enum.Font.GothamSemibold
-GithubArrow.Text = "↓"
-GithubArrow.TextColor3 = Color3.fromRGB(255, 255, 255)
-GithubArrow.TextSize = 25
-GithubArrow.TextXAlignment = Enum.TextXAlignment.Left
+local ghArr = Instance.new("TextLabel", ghRow)
+ghArr.Name = "Arrow"
+ghArr.Text = "↓"
+ghArr.Position = UDim2.new(0, 175, 0, -35)
+ghArr.Size = UDim2.new(0.65, 0, 1, 0)
+ghArr.Font = Enum.Font.GothamSemibold
+ghArr.TextColor3 = Color3.fromRGB(255, 255, 255)
+ghArr.BackgroundTransparency = 1
+ghArr.TextSize = 25
+ghArr.TextXAlignment = Enum.TextXAlignment.Left
 
-local GithubBox = Instance.new("TextBox")
-GithubBox.Name = "WaitSpeed"
-GithubBox.Parent = GithubRow
-GithubBox.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
-GithubBox.BackgroundTransparency = 0.2
-GithubBox.Position = UDim2.new(-0.01, 8, 0.5, -13)
-GithubBox.Size = UDim2.new(1, -8, 0, 26)
-GithubBox.ClearTextOnFocus = false
-GithubBox.TextEditable = false
-GithubBox.Font = Enum.Font.GothamSemibold
-GithubBox.Text = "https://github.com/Tweety0ff/RobloxMusicRFEAbuse"
-GithubBox.TextColor3 = Color3.fromRGB(52, 211, 153)
-GithubBox.TextSize = 14
-Instance.new("UICorner", GithubBox).CornerRadius = UDim.new(0, 8)
+local ghBox = Instance.new("TextBox", ghRow)
+ghBox.Name = "WaitSpeed"
+ghBox.Text = "https://github.com/Tweety0ff/RobloxMusicRFEAbuse"
+ghBox.Position = UDim2.new(-0.01, 8, 0.5, -13)
+ghBox.Size = UDim2.new(1, -8, 0, 26)
+ghBox.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
+ghBox.BackgroundTransparency = 0.2
+ghBox.Font = Enum.Font.GothamSemibold
+ghBox.TextColor3 = Color3.fromRGB(52, 211, 153)
+ghBox.TextSize = 14
+ghBox.ClearTextOnFocus = false
+ghBox.TextEditable = false
+Instance.new("UICorner", ghBox).CornerRadius = UDim.new(0, 8)
 
 
-local statusToken = 0
-local function ScriptLoadStatus(text, color)
-	local token = statusToken + 1
-	statusToken = token
-	statusLabel.Text = text
-	if color then
-		statusLabel.TextColor3 = color
-	else
-		statusLabel.TextColor3 = Color3.fromRGB(52, 211, 153) 
-	end
+-- logic stuff
+local tkn = 0
+local function setStatus(txt, c)
+	tkn = tkn + 1
+	local cur_tkn = tkn
+	statLabel.Text = txt
+	if c then statLabel.TextColor3 = c else statLabel.TextColor3 = Color3.fromRGB(52, 211, 153) end
+	
 	task.delay(3, function()
-		if statusToken == token then
-			statusLabel.Text = ""
-		end
+		if tkn == cur_tkn then statLabel.Text = "" end
 	end)
 end
 
-local function closeGuiAnimation()
-	local tweenInfo = TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In)
-	
-	local closeTween = TweenService:Create(mainFrame, tweenInfo, {
+local function doCloseAnim()
+	local tw = ts:Create(mainFr, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
 		GroupTransparency = 1,
 		Size = UDim2.new(0, 1, 0, 1)
 	})
-	
-	closeTween:Play()
-	
-	closeTween.Completed:Connect(function()
-		if screenGui then
-			screenGui:Destroy()
-		end
+	tw:Play()
+	tw.Completed:Connect(function()
+		if scr then scr:Destroy() end
 	end)
 end
 
-local function LoadScriptNewUi()
+local function doLoadNew()
 	local url = "https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/Versions/Last"
-	local success, err = pcall(function()
-		loadstring(game:HttpGet(url))()
-	end)
+	local ok, err_msg = pcall(function() loadstring(game:HttpGet(url))() end)
 	
-	if success then
-		ScriptLoadStatus("Last Version Loaded ✓")
-		task.delay(0.01, closeGuiAnimation)
+	if ok then
+		setStatus("Last Version Loaded ✓")
+		task.delay(0.01, doCloseAnim)
 	else
-		ScriptLoadStatus("Error loading script", Color3.fromRGB(255, 85, 85))
-		warn("Load error: " .. tostring(err))
-	end
-end
-
-local function LoadScriptOldUi()
-	task.delay(0.01, closeGuiAnimation)
-	local url = "https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/Versions/1.0(old%20ui)"
-	local success, err = pcall(function()
-		loadstring(game:HttpGet(url))()
-	end)
-	
-	if success then
-		ScriptLoadStatus("Version 1.0 Loaded ✓")
-	else
-		ScriptLoadStatus("Error loading script", Color3.fromRGB(255, 85, 85))
-		warn("Load error: " .. tostring(err))
-	end
-end
-
-local dropdownOpen = false
-local logsDropdownOpen = false
-local selectedVersion = nil 
-local selectedLog = nil
-
-local function setLogsDropdown(open)
-	logsDropdownOpen = open
-	logsDropdownArrow.Text = open and "▲" or "▼"
-
-	if open then
-		if dropdownOpen then setDropdown(false) end 
-		logsDropdownList.Visible = true
-		local targetHeight = logsListItems.Size.Y.Offset + logsListPadding.PaddingTop.Offset + logsListPadding.PaddingBottom.Offset
+		setStatus("Error loading script", Color3.fromRGB(255, 85, 85))
 		
-		logsDropdownList.Size = UDim2.new(1, 0, 0, 0)
-		TweenService:Create(logsDropdownList, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-			Size = UDim2.new(1, 0, 0, targetHeight)
-		}):Play()
+	end
+end
+
+local function doLoadOld()
+	task.delay(0.01, doCloseAnim)
+	local ok, err_msg = pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/Versions/1.0(old%20ui)"))()
+	end)
+	
+	if ok then
+		setStatus("Version 1.0 Loaded ✓")
 	else
-		TweenService:Create(logsDropdownList, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
-			Size = UDim2.new(1, 0, 0, 0)
-		}):Play()
+		setStatus("Error loading script", Color3.fromRGB(255, 85, 85))
+	end
+end
+
+local isDDOpen = false
+local isLogOpen = false
+local sel_ver = nil 
+local sel_log = nil
+
+local function togglelogsdropdown(state)
+	isLogOpen = state
+	if state then logDD_arr.Text = "▲" else logDD_arr.Text = "▼" end
+
+	if state then
+		if isDDOpen then toggleMainDD(false) end 
+		log_list.Visible = true
+		local th = log_items.Size.Y.Offset + pad2.PaddingTop.Offset + pad2.PaddingBottom.Offset
+		
+		log_list.Size = UDim2.new(1, 0, 0, 0)
+		ts:Create(log_list, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, th)}):Play()
+	else
+		ts:Create(log_list, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Size = UDim2.new(1, 0, 0, 0)}):Play()
 		task.delay(0.15, function()
-			if not logsDropdownOpen then
-				logsDropdownList.Visible = false
-			end
+			if not isLogOpen then log_list.Visible = false end
 		end)
 	end
 end
 
-local function setDropdown(open)
-	dropdownOpen = open
-	dropdownArrow.Text = open and "▲" or "▼"
+function toggleMainDD(state)
+	isDDOpen = state
+	if state then ddArr1.Text = "▲" else ddArr1.Text = "▼" end
 
-	if open then
-		if logsDropdownOpen then setLogsDropdown(false) end 
-		dropdownList.Visible = true
-		local targetHeight = listItems.Size.Y.Offset + listPadding.PaddingTop.Offset + listPadding.PaddingBottom.Offset
+	if state then
+		if isLogOpen then togglelogsdropdown(false) end 
+		list_frame.Visible = true
+		local th = items.Size.Y.Offset + pad1.PaddingTop.Offset + pad1.PaddingBottom.Offset
 		
-		dropdownList.Size = UDim2.new(1, 0, 0, 0)
-		TweenService:Create(dropdownList, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-			Size = UDim2.new(1, 0, 0, targetHeight)
-		}):Play()
+		list_frame.Size = UDim2.new(1, 0, 0, 0)
+		ts:Create(list_frame, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, th)}):Play()
 	else
-		TweenService:Create(dropdownList, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
-			Size = UDim2.new(1, 0, 0, 0)
-		}):Play()
+		ts:Create(list_frame, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Size = UDim2.new(1, 0, 0, 0)}):Play()
 		task.delay(0.15, function()
-			if not dropdownOpen then
-				dropdownList.Visible = false
-			end
+			if not isDDOpen then list_frame.Visible = false end
 		end)
 	end
 end
 
-dropdownButton.MouseButton1Click:Connect(function()
-	setDropdown(not dropdownOpen)
+DropdownBtn1.MouseButton1Click:Connect(function() toggleMainDD(not isDDOpen) end)
+
+lastversionbutton.MouseButton1Click:Connect(function()
+    sel_ver = 1
+	ddTxt1.Text = "Selected: Last Version"
+	toggleMainDD(false)
 end)
 
-LastVersion.MouseButton1Click:Connect(function()
-    selectedVersion = 1
-	dropdownText.Text = "Selected: Last Version"
-	setDropdown(false)
+btnOldVer.MouseButton1Click:Connect(function()
+    sel_ver = 2
+	ddTxt1.Text = "Selected: 1.0(old ui)"
+	toggleMainDD(false)
 end)
 
-OldVersion.MouseButton1Click:Connect(function()
-    selectedVersion = 2
-	dropdownText.Text = "Selected: 1.0(old ui)"
-	setDropdown(false)
-end)
-
-ExecuteButton.MouseButton1Click:Connect(function()
-    if selectedVersion == 1 then
-        ScriptLoadStatus("Loading Last Version...")
-        LoadScriptNewUi()
-    elseif selectedVersion == 2 then
-        ScriptLoadStatus("Loading Version 1.0...")
-        LoadScriptOldUi()
+execBtn.MouseButton1Click:Connect(function()
+    if sel_ver == 1 then
+        setStatus("Loading Last Version...")
+        doLoadNew()
+    elseif sel_ver == 2 then
+        setStatus("Loading Version 1.0...")
+        doLoadOld()
     else
-        ScriptLoadStatus("Error: Select a script version first!", Color3.fromRGB(255, 85, 85))
+        setStatus("Error: Select a script version first!", Color3.fromRGB(255, 85, 85))
     end
 end)
 
 
+logdropdownbutton.MouseButton1Click:Connect(function() togglelogsdropdown(not isLogOpen) end)
 
-logsDropdownButton.MouseButton1Click:Connect(function()
-	setLogsDropdown(not logsDropdownOpen)
+bLog1.MouseButton1Click:Connect(function()
+	sel_log = 1
+	logDD_txt.Text = "Selected: Main Update Logs"
+	togglelogsdropdown(false)
 end)
 
-
-logLastVersion.MouseButton1Click:Connect(function()
-	selectedLog = 1
-	logsDropdownText.Text = "Selected: Main Update Logs"
-	setLogsDropdown(false)
+bLog2.MouseButton1Click:Connect(function()
+	sel_log = 2
+	logDD_txt.Text = "Selected: Loader Update Logs"
+	togglelogsdropdown(false)
 end)
 
-logOldVersion.MouseButton1Click:Connect(function()
-	selectedLog = 2
-	logsDropdownText.Text = "Selected: Loader Update Logs"
-	setLogsDropdown(false)
-end)
-
-LoadLogsButton.MouseButton1Click:Connect(function()
-	if selectedLog == 1 then
-		ScriptLoadStatus("Opening Main Logs...")
-		local success, err = pcall(function()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/UpdateLogs/UpdateLogsMain"))()
-		end)
-		if success then
-			ScriptLoadStatus("Main logs opened ✓")
-		else
-			ScriptLoadStatus("Error: " .. tostring(err), Color3.fromRGB(255, 85, 85))
-		end
-	elseif selectedLog == 2 then
-		ScriptLoadStatus("Opening Loader Logs...")
-		local success, err = pcall(function()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/UpdateLogs/UpdateLogsLoader"))()
-		end)
-		if success then
-			ScriptLoadStatus("Loader logs opened ✓")
-		else
-			ScriptLoadStatus("Error: " .. tostring(err), Color3.fromRGB(255, 85, 85))
-		end
+loadLogBtn.MouseButton1Click:Connect(function()
+	if sel_log == 1 then
+		setStatus("Opening Main Logs...")
+		local o, e = pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/UpdateLogs/UpdateLogsMain"))() end)
+		if o then setStatus("Main logs opened ✓") else setStatus("Error: " .. tostring(e), Color3.fromRGB(255, 85, 85)) end
+	elseif sel_log == 2 then
+		setStatus("Opening Loader Logs...")
+		local o, e = pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/UpdateLogs/UpdateLogsLoader"))() end)
+		if o then setStatus("Loader logs opened ✓") else setStatus("Error: " .. tostring(e), Color3.fromRGB(255, 85, 85)) end
 	else
-		ScriptLoadStatus("Error: Select update logs first!", Color3.fromRGB(255, 85, 85))
+		setStatus("Error: Select update logs first!", Color3.fromRGB(255, 85, 85))
 	end
 end)
 
-local function enableSmoothDragging(dragBar, frame)
-	local dragging = false
-	local dragInput = nil
-	local dragStart = nil
-	local startPos = nil
 
-	local tweenInfo = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+--drag
+local function applydraggy(bar, frame_ui)
+	local isDrag, dragInput, startPos, dragStart = false, nil, nil, nil
 
-	dragBar.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			dragging = true
-			dragStart = input.Position
-			startPos = frame.Position
+	bar.InputBegan:Connect(function(inp)
+		if inp.UserInputType == Enum.UserInputType.MouseButton1 or inp.UserInputType == Enum.UserInputType.Touch then
+			isDrag = true; dragStart = inp.Position; startPos = frame_ui.Position
 		end
 	end)
 
-	UserInputService.InputEnded:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			dragging = false
-		end
+	uis.InputEnded:Connect(function(inp)
+		if inp.UserInputType == Enum.UserInputType.MouseButton1 or inp.UserInputType == Enum.UserInputType.Touch then isDrag = false end
 	end)
 
-	dragBar.InputChanged:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-			dragInput = input
-		end
+	bar.InputChanged:Connect(function(inp)
+		if inp.UserInputType == Enum.UserInputType.MouseMovement or inp.UserInputType == Enum.UserInputType.Touch then dragInput = inp end
 	end)
 
-	UserInputService.InputChanged:Connect(function(input)
-		if input == dragInput and dragging then
-			local delta = input.Position - dragStart
-			local targetPosition = UDim2.new(
-				startPos.X.Scale,
-				startPos.X.Offset + delta.X,
-				startPos.Y.Scale,
-				startPos.Y.Offset + delta.Y
-			)
-			TweenService:Create(frame, tweenInfo, { Position = targetPosition }):Play()
+	uis.InputChanged:Connect(function(inp)
+		if inp == dragInput and isDrag then
+			local d = inp.Position - dragStart
+			ts:Create(frame_ui, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { 
+				Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + d.X, startPos.Y.Scale, startPos.Y.Offset + d.Y) 
+			}):Play()
 		end
 	end)
 end
 
-enableSmoothDragging(topBar, mainFrame)
+applydraggy(topBar, mainFr)
