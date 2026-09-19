@@ -1,4 +1,4 @@
--- this will always be open source
+--this will always be open source
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
@@ -148,35 +148,35 @@ itemsLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 	listItems.Size = UDim2.new(1, 0, 0, itemsLayout.AbsoluteContentSize.Y)
 end)
 
-local option1 = Instance.new("TextButton")
-option1.Name = "Option1"
-option1.Parent = listItems
-option1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-option1.BackgroundTransparency = 0.9
-option1.BorderSizePixel = 0
-option1.Size = UDim2.new(1, 0, 0, 40)
-option1.Font = Enum.Font.GothamSemibold
-option1.Text = "▶  Select Last Version Script"
-option1.TextColor3 = Color3.fromRGB(255, 255, 255)
-option1.TextSize = 14
-option1.LayoutOrder = 1
-option1.ZIndex = 22
-Instance.new("UICorner", option1).CornerRadius = UDim.new(0, 8)
+local LastVersion = Instance.new("TextButton")
+LastVersion.Name = "LastVersion"
+LastVersion.Parent = listItems
+LastVersion.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+LastVersion.BackgroundTransparency = 0.9
+LastVersion.BorderSizePixel = 0
+LastVersion.Size = UDim2.new(1, 0, 0, 40)
+LastVersion.Font = Enum.Font.GothamSemibold
+LastVersion.Text = "▶ Last Version Script"
+LastVersion.TextColor3 = Color3.fromRGB(255, 255, 255)
+LastVersion.TextSize = 14
+LastVersion.LayoutOrder = 1
+LastVersion.ZIndex = 22
+Instance.new("UICorner", LastVersion).CornerRadius = UDim.new(0, 8)
 
-local option2 = Instance.new("TextButton")
-option2.Name = "Option2"
-option2.Parent = listItems
-option2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-option2.BackgroundTransparency = 0.9
-option2.BorderSizePixel = 0
-option2.Size = UDim2.new(1, 0, 0, 40)
-option2.Font = Enum.Font.GothamSemibold
-option2.Text = "▶  Select 1.0 Version Script(old ui)"
-option2.TextColor3 = Color3.fromRGB(255, 255, 255)
-option2.TextSize = 14
-option2.LayoutOrder = 2
-option2.ZIndex = 22
-Instance.new("UICorner", option2).CornerRadius = UDim.new(0, 8)
+local OldVersion = Instance.new("TextButton")
+OldVersion.Name = "OldVersion"
+OldVersion.Parent = listItems
+OldVersion.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+OldVersion.BackgroundTransparency = 0.9
+OldVersion.BorderSizePixel = 0
+OldVersion.Size = UDim2.new(1, 0, 0, 40)
+OldVersion.Font = Enum.Font.GothamSemibold
+OldVersion.Text = "▶ 1.0 Version Script(old ui)"
+OldVersion.TextColor3 = Color3.fromRGB(255, 255, 255)
+OldVersion.TextSize = 14
+OldVersion.LayoutOrder = 2
+OldVersion.ZIndex = 22
+Instance.new("UICorner", OldVersion).CornerRadius = UDim.new(0, 8)
 
 local statusLabel = Instance.new("TextLabel")
 statusLabel.Name = "Status"
@@ -285,35 +285,35 @@ logsItemsLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function
 	logsListItems.Size = UDim2.new(1, 0, 0, logsItemsLayout.AbsoluteContentSize.Y)
 end)
 
-local logOption1 = Instance.new("TextButton")
-logOption1.Name = "LogOption1"
-logOption1.Parent = logsListItems
-logOption1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-logOption1.BackgroundTransparency = 0.9
-logOption1.BorderSizePixel = 0
-logOption1.Size = UDim2.new(1, 0, 0, 40)
-logOption1.Font = Enum.Font.GothamSemibold
-logOption1.Text = "▶  Main Update Logs"
-logOption1.TextColor3 = Color3.fromRGB(255, 255, 255)
-logOption1.TextSize = 14
-logOption1.LayoutOrder = 1
-logOption1.ZIndex = 22
-Instance.new("UICorner", logOption1).CornerRadius = UDim.new(0, 8)
+local logLastVersion = Instance.new("TextButton")
+logLastVersion.Name = "LogLastVersion"
+logLastVersion.Parent = logsListItems
+logLastVersion.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+logLastVersion.BackgroundTransparency = 0.9
+logLastVersion.BorderSizePixel = 0
+logLastVersion.Size = UDim2.new(1, 0, 0, 40)
+logLastVersion.Font = Enum.Font.GothamSemibold
+logLastVersion.Text = "▶  Main Update Logs"
+logLastVersion.TextColor3 = Color3.fromRGB(255, 255, 255)
+logLastVersion.TextSize = 14
+logLastVersion.LayoutOrder = 1
+logLastVersion.ZIndex = 22
+Instance.new("UICorner", logLastVersion).CornerRadius = UDim.new(0, 8)
 
-local logOption2 = Instance.new("TextButton")
-logOption2.Name = "LogOption2"
-logOption2.Parent = logsListItems
-logOption2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-logOption2.BackgroundTransparency = 0.9
-logOption2.BorderSizePixel = 0
-logOption2.Size = UDim2.new(1, 0, 0, 40)
-logOption2.Font = Enum.Font.GothamSemibold
-logOption2.Text = "▶  Loader Update Logs"
-logOption2.TextColor3 = Color3.fromRGB(255, 255, 255)
-logOption2.TextSize = 14
-logOption2.LayoutOrder = 2
-logOption2.ZIndex = 22
-Instance.new("UICorner", logOption2).CornerRadius = UDim.new(0, 8)
+local logOldVersion = Instance.new("TextButton")
+logOldVersion.Name = "LogOldVersion"
+logOldVersion.Parent = logsListItems
+logOldVersion.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+logOldVersion.BackgroundTransparency = 0.9
+logOldVersion.BorderSizePixel = 0
+logOldVersion.Size = UDim2.new(1, 0, 0, 40)
+logOldVersion.Font = Enum.Font.GothamSemibold
+logOldVersion.Text = "▶  Loader Update Logs"
+logOldVersion.TextColor3 = Color3.fromRGB(255, 255, 255)
+logOldVersion.TextSize = 14
+logOldVersion.LayoutOrder = 2
+logOldVersion.ZIndex = 22
+Instance.new("UICorner", logOldVersion).CornerRadius = UDim.new(0, 8)
 
 
 local LoadLogsButton = Instance.new("TextButton")
@@ -381,7 +381,7 @@ Instance.new("UICorner", GithubBox).CornerRadius = UDim.new(0, 8)
 
 
 local statusToken = 0
-local function showStatus(text, color)
+local function ScriptLoadStatus(text, color)
 	local token = statusToken + 1
 	statusToken = token
 	statusLabel.Text = text
@@ -414,53 +414,33 @@ local function closeGuiAnimation()
 	end)
 end
 
-local function safeLoad(url)
-	local success, result = pcall(function()
-		return game:HttpGet(url)
-	end)
-
-	if not success then
-		showStatus("Error: HTTP request failed", Color3.fromRGB(255, 85, 85))
-		warn("HTTP Request failed: " .. tostring(result))
-		return false
-	end
-
-	if result:match("404: Not Found") then
-		showStatus("Error: File not found (404)", Color3.fromRGB(255, 85, 85))
-		warn("GitHub returned 404 for URL: " .. url)
-		return false
-	end
-
-	local func, err = loadstring(result)
-	if type(func) ~= "function" then
-		showStatus("Error: Script syntax invalid", Color3.fromRGB(255, 85, 85))
-		warn("Loadstring Error (check file syntax): " .. tostring(err))
-		return false
-	end
-
-	local execSuccess, execErr = pcall(func)
-	if not execSuccess then
-		showStatus("Error: Execution failed", Color3.fromRGB(255, 85, 85))
-		warn("Execution Error: " .. tostring(execErr))
-		return false
-	end
-
-	return true
-end
-
-local function loadScript1()
+local function LoadScriptNewUi()
 	local url = "https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/Versions/Last"
-	if safeLoad(url) then
-		showStatus("Last Version Loaded ✓")
+	local success, err = pcall(function()
+		loadstring(game:HttpGet(url))()
+	end)
+	
+	if success then
+		ScriptLoadStatus("Last Version Loaded ✓")
 		task.delay(0.01, closeGuiAnimation)
+	else
+		ScriptLoadStatus("Error loading script", Color3.fromRGB(255, 85, 85))
+		warn("Load error: " .. tostring(err))
 	end
 end
 
-local function loadScript2()
-    task.delay(0.01, closeGuiAnimation)
+local function LoadScriptOldUi()
+	task.delay(0.01, closeGuiAnimation)
 	local url = "https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/Versions/1.0(old%20ui)"
-	if safeLoad(url) then
-		showStatus("Version 1.0 Loaded ✓")
+	local success, err = pcall(function()
+		loadstring(game:HttpGet(url))()
+	end)
+	
+	if success then
+		ScriptLoadStatus("Version 1.0 Loaded ✓")
+	else
+		ScriptLoadStatus("Error loading script", Color3.fromRGB(255, 85, 85))
+		warn("Load error: " .. tostring(err))
 	end
 end
 
@@ -523,13 +503,13 @@ dropdownButton.MouseButton1Click:Connect(function()
 	setDropdown(not dropdownOpen)
 end)
 
-option1.MouseButton1Click:Connect(function()
+LastVersion.MouseButton1Click:Connect(function()
     selectedVersion = 1
 	dropdownText.Text = "Selected: Last Version"
 	setDropdown(false)
 end)
 
-option2.MouseButton1Click:Connect(function()
+OldVersion.MouseButton1Click:Connect(function()
     selectedVersion = 2
 	dropdownText.Text = "Selected: 1.0(old ui)"
 	setDropdown(false)
@@ -537,13 +517,13 @@ end)
 
 ExecuteButton.MouseButton1Click:Connect(function()
     if selectedVersion == 1 then
-        showStatus("Loading Last Version...")
-        loadScript1()
+        ScriptLoadStatus("Loading Last Version...")
+        LoadScriptNewUi()
     elseif selectedVersion == 2 then
-        showStatus("Loading Version 1.0...")
-        loadScript2()
+        ScriptLoadStatus("Loading Version 1.0...")
+        LoadScriptOldUi()
     else
-        showStatus("Error: Select a script version first!", Color3.fromRGB(255, 85, 85))
+        ScriptLoadStatus("Error: Select a script version first!", Color3.fromRGB(255, 85, 85))
     end
 end)
 
@@ -554,13 +534,13 @@ logsDropdownButton.MouseButton1Click:Connect(function()
 end)
 
 
-logOption1.MouseButton1Click:Connect(function()
+logLastVersion.MouseButton1Click:Connect(function()
 	selectedLog = 1
 	logsDropdownText.Text = "Selected: Main Update Logs"
 	setLogsDropdown(false)
 end)
 
-logOption2.MouseButton1Click:Connect(function()
+logOldVersion.MouseButton1Click:Connect(function()
 	selectedLog = 2
 	logsDropdownText.Text = "Selected: Loader Update Logs"
 	setLogsDropdown(false)
@@ -568,27 +548,27 @@ end)
 
 LoadLogsButton.MouseButton1Click:Connect(function()
 	if selectedLog == 1 then
-		showStatus("Opening Main Logs...")
+		ScriptLoadStatus("Opening Main Logs...")
 		local success, err = pcall(function()
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/UpdateLogs/UpdateLogsMain"))()
 		end)
 		if success then
-			showStatus("Main logs opened ✓")
+			ScriptLoadStatus("Main logs opened ✓")
 		else
-			showStatus("Error: " .. tostring(err), Color3.fromRGB(255, 85, 85))
+			ScriptLoadStatus("Error: " .. tostring(err), Color3.fromRGB(255, 85, 85))
 		end
 	elseif selectedLog == 2 then
-		showStatus("Opening Loader Logs...")
+		ScriptLoadStatus("Opening Loader Logs...")
 		local success, err = pcall(function()
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/UpdateLogs/UpdateLogsLoader"))()
 		end)
 		if success then
-			showStatus("Loader logs opened ✓")
+			ScriptLoadStatus("Loader logs opened ✓")
 		else
-			showStatus("Error: " .. tostring(err), Color3.fromRGB(255, 85, 85))
+			ScriptLoadStatus("Error: " .. tostring(err), Color3.fromRGB(255, 85, 85))
 		end
 	else
-		showStatus("Error: Select update logs first!", Color3.fromRGB(255, 85, 85))
+		ScriptLoadStatus("Error: Select update logs first!", Color3.fromRGB(255, 85, 85))
 	end
 end)
 
