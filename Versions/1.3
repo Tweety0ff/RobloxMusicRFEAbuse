@@ -586,9 +586,10 @@ minimizeButton.MouseButton1Click:Connect(function()
 	minimizeButton.Text = isMinimized and "+" or "_"
 
 	if isMinimized then
+		setBodyVisible(false)
+		
 		local collapse = TweenService:Create(mainFrame, tweenMinimize, { Size = minimizedSize })
 		collapse.Completed:Connect(function()
-			setBodyVisible(false)
 			mainFrame.BackgroundTransparency = 1
 			mainStroke.Transparency = 1
 			minimizeAnimating = false
@@ -600,6 +601,7 @@ minimizeButton.MouseButton1Click:Connect(function()
 		setBodyVisible(true)
 		mainPage.Visible = (currentTab == "Main")
 		settingsPage.Visible = (currentTab ~= "Main")
+		
 		local expand = TweenService:Create(mainFrame, tweenRestore, { Size = normalSize })
 		expand.Completed:Connect(function()
 			minimizeAnimating = false
