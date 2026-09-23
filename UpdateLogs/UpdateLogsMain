@@ -151,9 +151,13 @@ local function addLog(version, date, changesArray)
 	end
 end
 
+addLog("1.3.2", "September 23 2026", {
+    "Improved minimize animation"
+})
+
 addLog("1.3.1", "September 23 2026", {
 	"Settings: Added Update Logs",
-    "If you execute script 2 times now, old gui will disappear",
+    "If you execute script 2 times now, old gui will disappear"
 })
 
 addLog("1.3", "September 23 2026", {
