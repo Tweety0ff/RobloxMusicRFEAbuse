@@ -76,7 +76,6 @@ closeBtn.Text = "X"
 closeBtn.TextColor3 = Color3.fromRGB(200, 205, 210)
 closeBtn.TextSize = 16
 
--- Окно с прокруткой для логов
 local scrollFrame = Instance.new("ScrollingFrame")
 scrollFrame.Name = "ScrollFrame"
 scrollFrame.Parent = mainFrame
