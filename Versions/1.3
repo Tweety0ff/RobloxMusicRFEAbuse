@@ -1,0 +1,626 @@
+--this will always be open source
+local coreGui = game:GetService("CoreGui")
+local soundService = game:GetService("SoundService")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "FEAG"
+screenGui.Parent = coreGui
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.ResetOnSpawn = false
+
+local tweenMinimize = TweenInfo.new(0.28, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+local tweenRestore = TweenInfo.new(0.28, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+local tweenExit = TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In)
+local tweenFadeOut = TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+local tweenFadeIn = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+local normalSize = UDim2.new(0, 480, 0, 295)
+local minimizedSize = UDim2.new(0, 480, 0, 42)
+
+local mainFrame = Instance.new("CanvasGroup")
+mainFrame.Name = "MainFrame"
+mainFrame.Parent = screenGui
+mainFrame.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
+mainFrame.BackgroundTransparency = 0.15
+mainFrame.BorderSizePixel = 0
+mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+mainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+mainFrame.Size = normalSize
+mainFrame.GroupTransparency = 1
+Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 14)
+
+local mainStroke = Instance.new("UIStroke")
+mainStroke.Color = Color3.fromRGB(255, 255, 255)
+mainStroke.Transparency = 0.85
+mainStroke.Thickness = 1
+mainStroke.Parent = mainFrame
+
+local topBar = Instance.new("Frame")
+topBar.Name = "TopBar"
+topBar.Parent = mainFrame
+topBar.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
+topBar.BackgroundTransparency = 0.2
+topBar.BorderSizePixel = 0
+topBar.Size = UDim2.new(1, 0, 0, 42)
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Name = "Title"
+titleLabel.Parent = topBar
+titleLabel.BackgroundTransparency = 1
+titleLabel.Position = UDim2.new(0, 16, 0, 0)
+titleLabel.Size = UDim2.new(0, 200, 1, 0)
+titleLabel.Font = Enum.Font.GothamBold
+titleLabel.Text = "Sounds Abuse FE 1.3"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.TextSize = 16
+titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local minimizeButton = Instance.new("TextButton")
+minimizeButton.Name = "Minimize"
+minimizeButton.Parent = topBar
+minimizeButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+minimizeButton.BackgroundTransparency = 0.9
+minimizeButton.Position = UDim2.new(1, -62, 0.5, -11)
+minimizeButton.Size = UDim2.new(0, 22, 0, 22)
+minimizeButton.Font = Enum.Font.GothamBold
+minimizeButton.Text = "_"
+minimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+minimizeButton.TextSize = 14
+Instance.new("UICorner", minimizeButton).CornerRadius = UDim.new(0, 6)
+
+local exitButton = Instance.new("TextButton")
+exitButton.Name = "Exit"
+exitButton.Parent = topBar
+exitButton.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+exitButton.Position = UDim2.new(1, -32, 0.5, -11)
+exitButton.Size = UDim2.new(0, 22, 0, 22)
+exitButton.Font = Enum.Font.GothamBold
+exitButton.Text = "x"
+exitButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+exitButton.TextSize = 14
+Instance.new("UICorner", exitButton).CornerRadius = UDim.new(0, 6)
+
+local sidebar = Instance.new("Frame")
+sidebar.Name = "Sidebar"
+sidebar.Parent = mainFrame
+sidebar.BackgroundColor3 = Color3.fromRGB(22, 27, 32)
+sidebar.BackgroundTransparency = 0.35
+sidebar.BorderSizePixel = 0
+sidebar.Position = UDim2.new(0, 0, 0, 42)
+sidebar.Size = UDim2.new(0, 118, 1, -42)
+
+local sideHolder = Instance.new("Frame")
+sideHolder.Name = "SideHolder"
+sideHolder.Parent = sidebar
+sideHolder.BackgroundTransparency = 1
+sideHolder.Size = UDim2.new(1, 0, 1, 0)
+
+local sideList = Instance.new("UIListLayout")
+sideList.Parent = sideHolder
+sideList.Padding = UDim.new(0, 6)
+sideList.HorizontalAlignment = Enum.HorizontalAlignment.Center
+sideList.VerticalAlignment = Enum.VerticalAlignment.Top
+
+local sidePadding = Instance.new("UIPadding")
+sidePadding.Parent = sideHolder
+sidePadding.PaddingTop = UDim.new(0, 12)
+
+local mainTabButton = Instance.new("TextButton")
+mainTabButton.Name = "MainTab"
+mainTabButton.Parent = sideHolder
+mainTabButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+mainTabButton.BackgroundTransparency = 0.6
+mainTabButton.BorderSizePixel = 0
+mainTabButton.Size = UDim2.new(1, -20, 0, 32)
+mainTabButton.Font = Enum.Font.GothamSemibold
+mainTabButton.Text = "Main"
+mainTabButton.TextColor3 = Color3.fromRGB(200, 205, 210)
+mainTabButton.TextSize = 13
+Instance.new("UICorner", mainTabButton).CornerRadius = UDim.new(0, 8)
+
+local settingsTabButton = Instance.new("TextButton")
+settingsTabButton.Name = "SettingsTab"
+settingsTabButton.Parent = sideHolder
+settingsTabButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+settingsTabButton.BackgroundTransparency = 0.75
+settingsTabButton.BorderSizePixel = 0
+settingsTabButton.Size = UDim2.new(1, -20, 0, 32)
+settingsTabButton.Font = Enum.Font.GothamSemibold
+settingsTabButton.Text = "Settings"
+settingsTabButton.TextColor3 = Color3.fromRGB(200, 205, 210)
+settingsTabButton.TextSize = 13
+Instance.new("UICorner", settingsTabButton).CornerRadius = UDim.new(0, 8)
+
+local mainPage = Instance.new("CanvasGroup")
+mainPage.Name = "MainPage"
+mainPage.Parent = mainFrame
+mainPage.BackgroundTransparency = 1
+mainPage.Position = UDim2.new(0, 130, 0, 54)
+mainPage.Size = UDim2.new(1, -142, 1, -66)
+mainPage.GroupTransparency = 0
+
+local pageList = Instance.new("UIListLayout")
+pageList.Parent = mainPage
+pageList.Padding = UDim.new(0, 5)
+pageList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local settingsPage = Instance.new("CanvasGroup")
+settingsPage.Name = "SettingsPage"
+settingsPage.Parent = mainFrame
+settingsPage.BackgroundTransparency = 1
+settingsPage.Position = UDim2.new(0, 130, 0, 54)
+settingsPage.Size = UDim2.new(1, -142, 1, -66)
+settingsPage.GroupTransparency = 0
+settingsPage.Visible = false
+
+local settingsList = Instance.new("UIListLayout")
+settingsList.Parent = settingsPage
+settingsList.Padding = UDim.new(0, 5)
+settingsList.SortOrder = Enum.SortOrder.LayoutOrder
+
+local keybindRow = Instance.new("Frame")
+keybindRow.Name = "KeybindRow"
+keybindRow.Parent = settingsPage
+keybindRow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+keybindRow.BackgroundTransparency = 0.92
+keybindRow.Size = UDim2.new(1, 0, 0, 40)
+keybindRow.LayoutOrder = 1
+Instance.new("UICorner", keybindRow).CornerRadius = UDim.new(0, 8)
+
+local keybindLabel = Instance.new("TextLabel")
+keybindLabel.Name = "Label"
+keybindLabel.Parent = keybindRow
+keybindLabel.BackgroundTransparency = 1
+keybindLabel.Position = UDim2.new(0, 12, 0, 0)
+keybindLabel.Size = UDim2.new(0.45, 0, 1, 0)
+keybindLabel.Font = Enum.Font.GothamSemibold
+keybindLabel.Text = "Open/Close Keybind :"
+keybindLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+keybindLabel.TextSize = 10
+keybindLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local keybindButton = Instance.new("TextButton")
+keybindButton.Name = "KeybindButton"
+keybindButton.Parent = keybindRow
+keybindButton.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
+keybindButton.BackgroundTransparency = 0.2
+keybindButton.Position = UDim2.new(0.5, 0, 0.5, -13)
+keybindButton.Size = UDim2.new(0.45, -8, 0, 26)
+keybindButton.Font = Enum.Font.GothamSemibold
+keybindButton.Text = "RightShift"
+keybindButton.TextColor3 = Color3.fromRGB(52, 211, 153)
+keybindButton.TextSize = 14
+Instance.new("UICorner", keybindButton).CornerRadius = UDim.new(0, 8)
+
+local rfeStatusLabel = Instance.new("TextLabel")
+rfeStatusLabel.Name = "RFEStatus"
+rfeStatusLabel.Parent = mainPage
+rfeStatusLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+rfeStatusLabel.BackgroundTransparency = 0.92
+rfeStatusLabel.Size = UDim2.new(1, 0, 0, 28)
+rfeStatusLabel.Font = Enum.Font.GothamSemibold
+rfeStatusLabel.Text = "RespectFilteringEnabled(RFE) : nil"
+rfeStatusLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+rfeStatusLabel.TextSize = 13
+rfeStatusLabel.LayoutOrder = 3
+Instance.new("UICorner", rfeStatusLabel).CornerRadius = UDim.new(0, 8)
+
+local buttonsRow = Instance.new("Frame")
+buttonsRow.Name = "ButtonsRow"
+buttonsRow.Parent = mainPage
+buttonsRow.BackgroundTransparency = 1
+buttonsRow.Size = UDim2.new(1, 0, 0, 32)
+buttonsRow.LayoutOrder = 4
+
+local annoyingSoundButton = Instance.new("TextButton")
+annoyingSoundButton.Name = "AnnoyingSound"
+annoyingSoundButton.Parent = buttonsRow
+annoyingSoundButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+annoyingSoundButton.BackgroundTransparency = 0.9
+annoyingSoundButton.Size = UDim2.new(1, 0, 1, 0)
+annoyingSoundButton.Font = Enum.Font.GothamSemibold
+annoyingSoundButton.Text = "Annoying Sound"
+annoyingSoundButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+annoyingSoundButton.TextSize = 13
+Instance.new("UICorner", annoyingSoundButton).CornerRadius = UDim.new(0, 8)
+
+local buttonsRow2 = Instance.new("Frame")
+buttonsRow2.Name = "ButtonsRow2"
+buttonsRow2.Parent = mainPage
+buttonsRow2.BackgroundTransparency = 1
+buttonsRow2.Size = UDim2.new(1, 0, 0, 32)
+buttonsRow2.LayoutOrder = 5
+
+local stopButton = Instance.new("TextButton")
+stopButton.Name = "Stop"
+stopButton.Parent = buttonsRow2
+stopButton.BackgroundColor3 = Color3.fromRGB(52, 211, 153)
+stopButton.BackgroundTransparency = 0.25
+stopButton.Size = UDim2.new(0.48, 0, 1, 0)
+stopButton.Font = Enum.Font.GothamSemibold
+stopButton.Text = "Stop Killing Sound Service"
+stopButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+stopButton.TextSize = 13
+Instance.new("UICorner", stopButton).CornerRadius = UDim.new(0, 8)
+
+local killSoundButton = Instance.new("TextButton")
+killSoundButton.Name = "KillSoundService"
+killSoundButton.Parent = buttonsRow2
+killSoundButton.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+killSoundButton.BackgroundTransparency = 0.4
+killSoundButton.Position = UDim2.new(0.52, 0, 0, 0)
+killSoundButton.Size = UDim2.new(0.48, 0, 1, 0)
+killSoundButton.Font = Enum.Font.GothamSemibold
+killSoundButton.Text = "Kill Sound Service"
+killSoundButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+killSoundButton.TextSize = 13
+Instance.new("UICorner", killSoundButton).CornerRadius = UDim.new(0, 8)
+
+local muteRow = Instance.new("Frame")
+muteRow.Name = "MuteRow"
+muteRow.Parent = mainPage
+muteRow.BackgroundTransparency = 1
+muteRow.Size = UDim2.new(1, 0, 0, 32)
+muteRow.LayoutOrder = 6
+
+local unmuteButton = Instance.new("TextButton")
+unmuteButton.Name = "UnmuteGame"
+unmuteButton.Parent = muteRow
+unmuteButton.BackgroundColor3 = Color3.fromRGB(52, 211, 153)
+unmuteButton.BackgroundTransparency = 0.25
+unmuteButton.Size = UDim2.new(0.48, 0, 1, 0)
+unmuteButton.Font = Enum.Font.GothamSemibold
+unmuteButton.Text = "Unmute Game"
+unmuteButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+unmuteButton.TextSize = 13
+Instance.new("UICorner", unmuteButton).CornerRadius = UDim.new(0, 8)
+
+local muteButton = Instance.new("TextButton")
+muteButton.Name = "MuteGame"
+muteButton.Parent = muteRow
+muteButton.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+muteButton.BackgroundTransparency = 0.4
+muteButton.Position = UDim2.new(0.52, 0, 0, 0)
+muteButton.Size = UDim2.new(0.48, 0, 1, 0)
+muteButton.Font = Enum.Font.GothamSemibold
+muteButton.Text = "Mute Game"
+muteButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+muteButton.TextSize = 13
+Instance.new("UICorner", muteButton).CornerRadius = UDim.new(0, 8)
+
+local waitSpeedRow = Instance.new("Frame")
+waitSpeedRow.Name = "WaitSpeedRow"
+waitSpeedRow.Parent = mainPage
+waitSpeedRow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+waitSpeedRow.BackgroundTransparency = 0.92
+waitSpeedRow.Size = UDim2.new(1, 0, 0, 40)
+waitSpeedRow.LayoutOrder = 7
+Instance.new("UICorner", waitSpeedRow).CornerRadius = UDim.new(0, 8)
+
+local waitSpeedLabel = Instance.new("TextLabel")
+waitSpeedLabel.Name = "Label"
+waitSpeedLabel.Parent = waitSpeedRow
+waitSpeedLabel.BackgroundTransparency = 1
+waitSpeedLabel.Position = UDim2.new(0, 12, 0, 0)
+waitSpeedLabel.Size = UDim2.new(0.45, 0, 1, 0)
+waitSpeedLabel.Font = Enum.Font.GothamSemibold
+waitSpeedLabel.Text = "Kill Sound Service Wait Speed :"
+waitSpeedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+waitSpeedLabel.TextSize = 10
+waitSpeedLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local waitSpeedBox = Instance.new("TextBox")
+waitSpeedBox.Name = "WaitSpeed"
+waitSpeedBox.Parent = waitSpeedRow
+waitSpeedBox.BackgroundColor3 = Color3.fromRGB(16, 20, 24)
+waitSpeedBox.BackgroundTransparency = 0.2
+waitSpeedBox.Position = UDim2.new(0.5, 0, 0.5, -13)
+waitSpeedBox.Size = UDim2.new(0.45, -8, 0, 26)
+waitSpeedBox.ClearTextOnFocus = false
+waitSpeedBox.Font = Enum.Font.GothamSemibold
+waitSpeedBox.Text = "0.5"
+waitSpeedBox.TextColor3 = Color3.fromRGB(52, 211, 153)
+waitSpeedBox.TextSize = 14
+Instance.new("UICorner", waitSpeedBox).CornerRadius = UDim.new(0, 8)
+
+local devNoteLabel = Instance.new("TextLabel")
+devNoteLabel.Name = "DevNote"
+devNoteLabel.Parent = mainPage
+devNoteLabel.BackgroundTransparency = 1
+devNoteLabel.Size = UDim2.new(1, 0, 0, 34)
+devNoteLabel.Font = Enum.Font.Gotham
+devNoteLabel.Text = "Dev Note : This Script is FE and it only FE when RespectFilteringEnabled(RFE) is disabled , elseif RespectFilteringEnabled(RFE) is true then it only be client , mostly RespectFilteringEnabled(RFE) disabled game are classic game"
+devNoteLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+devNoteLabel.TextSize = 10
+devNoteLabel.TextWrapped = true
+devNoteLabel.TextXAlignment = Enum.TextXAlignment.Left
+devNoteLabel.TextYAlignment = Enum.TextYAlignment.Top
+devNoteLabel.LayoutOrder = 8
+
+local sound = Instance.new("Sound")
+sound.Parent = soundService
+sound.SoundId = "rbxassetid://9086208751"
+sound.Volume = 5
+sound.Name = "FEAG_Sound"
+
+local currentTab = "Main"
+
+
+local tweenTabOut = TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
+local tweenTabIn = TweenInfo.new(0.24, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+local tabSlideOffset = 22
+local tabBasePosition = UDim2.new(0, 130, 0, 54)
+local tabSwitching = false
+
+local function switchTab(tabName)
+	if tabName == currentTab or tabSwitching then return end
+	tabSwitching = true
+	currentTab = tabName
+	local isMain = (tabName == "Main")
+	mainTabButton.BackgroundTransparency = isMain and 0.6 or 0.75
+	settingsTabButton.BackgroundTransparency = isMain and 0.75 or 0.6
+
+local outgoing = isMain and settingsPage or mainPage
+	local incoming = isMain and mainPage or settingsPage
+	local incomingFromLeft = isMain
+	outgoing.GroupTransparency = 0
+	local outTween = TweenService:Create(outgoing, tweenTabOut, {
+		GroupTransparency = 1,
+		Position = tabBasePosition + UDim2.new(0, incomingFromLeft and tabSlideOffset or -tabSlideOffset, 0, 0),
+	})
+	outTween.Completed:Connect(function()
+		outgoing.Visible = false
+		outgoing.Position = tabBasePosition
+		outgoing.GroupTransparency = 0
+	end)
+	outTween:Play()
+
+	incoming.Position = tabBasePosition + UDim2.new(0, incomingFromLeft and -tabSlideOffset or tabSlideOffset, 0, 0)
+	incoming.GroupTransparency = 1
+	incoming.Visible = true
+	local inTween = TweenService:Create(incoming, tweenTabIn, {
+		GroupTransparency = 0,
+		Position = tabBasePosition,
+	})
+	inTween.Completed:Connect(function()
+		tabSwitching = false
+	end)
+	inTween:Play()
+end
+
+mainTabButton.MouseButton1Click:Connect(function() switchTab("Main") end)
+settingsTabButton.MouseButton1Click:Connect(function() switchTab("Settings") end)
+
+local toggleKey = Enum.KeyCode.RightShift
+local rebinding = false
+
+keybindButton.MouseButton1Click:Connect(function()
+	rebinding = true
+	keybindButton.Text = "..."
+end)
+
+local isMinimized = false
+local minimizeAnimating = false
+
+local function setBodyVisible(visible)
+	for _, child in ipairs(mainFrame:GetChildren()) do
+		if child ~= topBar and child ~= mainStroke and not child:IsA("UICorner") then
+			child.Visible = visible
+		end
+	end
+end
+
+exitButton.MouseButton1Click:Connect(function()
+	local exitTween = TweenService:Create(mainFrame, tweenExit, {
+		Size = UDim2.new(0, 0, 0, 0),
+		GroupTransparency = 1,
+	})
+	exitTween.Completed:Connect(function()
+		screenGui:Destroy()
+	end)
+	exitTween:Play()
+end)
+
+local uiOpen = true
+local toggleAnimating = false
+
+local function toggleUI()
+	if toggleAnimating then return end
+	toggleAnimating = true
+
+	if uiOpen then
+		local fadeOut = TweenService:Create(mainFrame, tweenFadeOut, { GroupTransparency = 1 })
+		fadeOut.Completed:Connect(function()
+			mainFrame.Visible = false
+			toggleAnimating = false
+		end)
+		fadeOut:Play()
+	else
+		mainFrame.GroupTransparency = 1
+		mainFrame.Visible = true
+		local fadeIn = TweenService:Create(mainFrame, tweenFadeIn, { GroupTransparency = 0 })
+		fadeIn.Completed:Connect(function()
+			toggleAnimating = false
+		end)
+		fadeIn:Play()
+	end
+
+	uiOpen = not uiOpen
+end
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+
+	if input.UserInputType ~= Enum.UserInputType.Keyboard then return end
+
+	if rebinding then
+		if input.KeyCode ~= Enum.KeyCode.Unknown then
+			toggleKey = input.KeyCode
+			keybindButton.Text = toggleKey.Name
+			rebinding = false
+		end
+		return
+	end
+
+
+	if UserInputService:GetFocusedTextBox() ~= nil then return end
+
+	if input.KeyCode == toggleKey then
+		toggleUI()
+	end
+end)
+
+local muteLoopActive = false
+
+muteButton.MouseButton1Click:Connect(function()
+	if muteLoopActive then return end
+	muteLoopActive = true
+
+	task.spawn(function()
+		while muteLoopActive do
+			task.wait()
+			for _, descendant in ipairs(workspace:GetDescendants()) do
+				if descendant:IsA("Sound") and descendant.IsPlaying then
+					descendant:Stop()
+				end
+			end
+		end
+	end)
+end)
+
+unmuteButton.MouseButton1Click:Connect(function()
+	muteLoopActive = false
+end)
+
+annoyingSoundButton.MouseButton1Click:Connect(function()
+	local descendants = workspace:GetDescendants()
+	for _, descendant in ipairs(descendants) do
+		if descendant:IsA("Sound") then
+			descendant:Play()
+		end
+	end
+end)
+
+local soundSpamActive = false
+
+killSoundButton.MouseButton1Click:Connect(function()
+	if soundSpamActive then return end
+	soundSpamActive = true
+
+	task.spawn(function()
+		while soundSpamActive do
+			local waitSpeed = tonumber(waitSpeedBox.Text) or 0.5
+			task.wait(waitSpeed)
+
+			local descendants = workspace:GetDescendants()
+			for _, descendant in ipairs(descendants) do
+				if descendant:IsA("Sound") then
+					descendant:Play()
+				end
+			end
+		end
+	end)
+end)
+
+stopButton.MouseButton1Click:Connect(function() 
+	soundSpamActive = false 
+end)
+
+sound:Play()
+
+minimizeButton.MouseButton1Click:Connect(function()
+	if minimizeAnimating or tabSwitching then return end
+	minimizeAnimating = true
+
+	isMinimized = not isMinimized
+	minimizeButton.Text = isMinimized and "+" or "_"
+
+	if isMinimized then
+		local collapse = TweenService:Create(mainFrame, tweenMinimize, { Size = minimizedSize })
+		collapse.Completed:Connect(function()
+			setBodyVisible(false)
+			mainFrame.BackgroundTransparency = 1
+			mainStroke.Transparency = 1
+			minimizeAnimating = false
+		end)
+		collapse:Play()
+	else
+		mainFrame.BackgroundTransparency = 0.15
+		mainStroke.Transparency = 0.85
+		setBodyVisible(true)
+		mainPage.Visible = (currentTab == "Main")
+		settingsPage.Visible = (currentTab ~= "Main")
+		local expand = TweenService:Create(mainFrame, tweenRestore, { Size = normalSize })
+		expand.Completed:Connect(function()
+			minimizeAnimating = false
+		end)
+		expand:Play()
+	end
+end)
+
+local introTween = TweenService:Create(mainFrame, tweenFadeIn, { GroupTransparency = 0 })
+introTween:Play()
+
+local function enableSmoothDragging(dragBar, frame)
+	local dragging = false
+	local dragInput = nil
+	local dragStart = nil
+	local startPos = nil
+
+	local tweenInfo = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+	local function update(input)
+		local delta = input.Position - dragStart
+		local targetPosition = UDim2.new(
+			startPos.X.Scale,
+			startPos.X.Offset + delta.X,
+			startPos.Y.Scale,
+			startPos.Y.Offset + delta.Y
+		)
+		TweenService:Create(frame, tweenInfo, { Position = targetPosition }):Play()
+	end
+
+	dragBar.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = frame.Position
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+
+	dragBar.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+end
+
+enableSmoothDragging(topBar, mainFrame)
+
+task.spawn(function()
+	while true do
+		task.wait(0.5)
+		local respectFilteringEnabled = soundService.RespectFilteringEnabled
+
+		if respectFilteringEnabled == true then
+			rfeStatusLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+			rfeStatusLabel.Text = "RespectFilteringEnabled(RFE) : true"
+		elseif respectFilteringEnabled == false then
+			rfeStatusLabel.Text = "RespectFilteringEnabled(RFE) : false"
+			rfeStatusLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+		end
+	end
+end)
