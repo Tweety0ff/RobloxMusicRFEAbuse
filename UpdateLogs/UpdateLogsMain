@@ -151,6 +151,29 @@ local function addLog(version, date, changesArray)
 	end
 end
 
+addLog("1.3.1", "September 23 2026", {
+	"Settings:
+Added Update Logs"
+})
+
+addLog("1.3", "September 23 2026", {
+	"Added Animations to everything(destroy, minimize, open/close with keybind, tab switching)"
+})
+
+addLog("1.2.1", "September 23 2026", {
+	"Fixed keybind not working sometimes"
+})
+
+addLog("1.2", "September 21 2026", {
+	"Added Settings",
+	"Settings:
+Added keybind to close/open"
+})
+
+addLog("1.1.3", "September 19 2026", {
+	"Removed loader cus i want to script be more simple(it will still be on github)"
+})
+
 addLog("1.1.2", "September 18 2026", {
 	"Fixed 1 corner not being rounded",
 	"Fixed when minimized lower corners not being rounded"
