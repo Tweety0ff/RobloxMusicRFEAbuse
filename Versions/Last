@@ -228,7 +228,7 @@ stopButton.BackgroundTransparency = 0.25
 stopButton.Size = UDim2.new(0.48, 0, 1, 0)
 stopButton.Font = Enum.Font.GothamSemibold
 stopButton.Text = "Stop Killing Sound Service"
-stopButton.TextColor3 = Color3.fromRGB(10, 15, 12)
+stopButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 stopButton.TextSize = 13
 Instance.new("UICorner", stopButton).CornerRadius = UDim.new(0, 8)
 
@@ -241,7 +241,7 @@ killSoundButton.Position = UDim2.new(0.52, 0, 0, 0)
 killSoundButton.Size = UDim2.new(0.48, 0, 1, 0)
 killSoundButton.Font = Enum.Font.GothamSemibold
 killSoundButton.Text = "Kill Sound Service"
-killSoundButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+killSoundButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 killSoundButton.TextSize = 13
 Instance.new("UICorner", killSoundButton).CornerRadius = UDim.new(0, 8)
 
@@ -260,7 +260,7 @@ unmuteButton.BackgroundTransparency = 0.25
 unmuteButton.Size = UDim2.new(0.48, 0, 1, 0)
 unmuteButton.Font = Enum.Font.GothamSemibold
 unmuteButton.Text = "Unmute Game"
-unmuteButton.TextColor3 = Color3.fromRGB(10, 15, 12)
+unmuteButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 unmuteButton.TextSize = 13
 Instance.new("UICorner", unmuteButton).CornerRadius = UDim.new(0, 8)
 
@@ -273,7 +273,7 @@ muteButton.Position = UDim2.new(0.52, 0, 0, 0)
 muteButton.Size = UDim2.new(0.48, 0, 1, 0)
 muteButton.Font = Enum.Font.GothamSemibold
 muteButton.Text = "Mute Game"
-muteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+muteButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 muteButton.TextSize = 13
 Instance.new("UICorner", muteButton).CornerRadius = UDim.new(0, 8)
 
@@ -357,6 +357,9 @@ keybindButton.MouseButton1Click:Connect(function()
 end)
 
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
+
+	if input.UserInputType ~= Enum.UserInputType.Keyboard then return end
+
 	if rebinding then
 		if input.KeyCode ~= Enum.KeyCode.Unknown then
 			toggleKey = input.KeyCode
@@ -366,7 +369,8 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 		return
 	end
 
-	if gameProcessed then return end
+
+	if UserInputService:GetFocusedTextBox() ~= nil then return end
 
 	if input.KeyCode == toggleKey then
 		mainFrame.Visible = not mainFrame.Visible
