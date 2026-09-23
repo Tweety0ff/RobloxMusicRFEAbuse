@@ -4,6 +4,32 @@ local soundService = game:GetService("SoundService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 
+local oldGuisFound = false
+local exitTweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In)
+
+for _, child in ipairs(coreGui:GetChildren()) do
+	if child.Name == "FEAG" then
+		oldGuisFound = true
+		local oldMainFrame = child:FindFirstChild("MainFrame")
+		if oldMainFrame then
+			local exitTween = TweenService:Create(oldMainFrame, exitTweenInfo, {
+				Size = UDim2.new(0, 0, 0, 0),
+				GroupTransparency = 1,
+			})
+			exitTween:Play()
+		end
+	end
+end
+
+if oldGuisFound then
+	task.wait(0.3)
+	for _, child in ipairs(coreGui:GetChildren()) do
+		if child.Name == "FEAG" then
+			child:Destroy()
+		end
+	end
+end
+
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "FEAG"
 screenGui.Parent = coreGui
@@ -52,7 +78,7 @@ titleLabel.BackgroundTransparency = 1
 titleLabel.Position = UDim2.new(0, 16, 0, 0)
 titleLabel.Size = UDim2.new(0, 200, 1, 0)
 titleLabel.Font = Enum.Font.GothamBold
-titleLabel.Text = "Sounds Abuse FE 1.3"
+titleLabel.Text = "Sounds Abuse FE 1.3.1"
 titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 titleLabel.TextSize = 16
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -206,6 +232,29 @@ rfeStatusLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 rfeStatusLabel.TextSize = 13
 rfeStatusLabel.LayoutOrder = 3
 Instance.new("UICorner", rfeStatusLabel).CornerRadius = UDim.new(0, 8)
+
+local UpdateLogsRow = Instance.new("Frame")
+UpdateLogsRow.Name = "UpdateLogsRow"
+UpdateLogsRow.Parent = settingsPage
+UpdateLogsRow.BackgroundTransparency = 1
+UpdateLogsRow.Size = UDim2.new(1, 0, 0, 32)
+UpdateLogsRow.LayoutOrder = 2
+
+local UpdateLogsButton = Instance.new("TextButton")
+UpdateLogsButton.Name = "CustomAction"
+UpdateLogsButton.Parent = UpdateLogsRow
+UpdateLogsButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+UpdateLogsButton.BackgroundTransparency = 0.9
+UpdateLogsButton.Size = UDim2.new(1, 0, 1, 0)
+UpdateLogsButton.Font = Enum.Font.GothamSemibold
+UpdateLogsButton.Text = "Update Logs"
+UpdateLogsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+UpdateLogsButton.TextSize = 13
+Instance.new("UICorner", UpdateLogsButton).CornerRadius = UDim.new(0, 8)
+
+UpdateLogsButton.MouseButton1Click:Connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tweety0ff/RobloxMusicRFEAbuse/refs/heads/main/UpdateLogs/UpdateLogsMain"))()
+end)
 
 local buttonsRow = Instance.new("Frame")
 buttonsRow.Name = "ButtonsRow"
