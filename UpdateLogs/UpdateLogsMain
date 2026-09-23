@@ -152,7 +152,8 @@ local function addLog(version, date, changesArray)
 end
 
 addLog("1.3.2", "September 23 2026", {
-    "Improved minimize animation"
+    "Improved minimize animation",
+    "I think its last update of the script now i will only fix bugs"
 })
 
 addLog("1.3.1", "September 23 2026", {
