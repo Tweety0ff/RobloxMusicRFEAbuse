@@ -1,4 +1,4 @@
-
+-- idk maybe its just beta ima still checking for bugs
 
 local sharedEnv = (typeof(getgenv) == "function" and getgenv()) or _G
 sharedEnv.LiquidGlassSkipIntro = true
