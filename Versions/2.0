@@ -4,7 +4,7 @@ local sharedEnv = (typeof(getgenv) == "function" and getgenv()) or _G
 sharedEnv.LiquidGlassSkipIntro = true
 
 local function BuildLiquidGlassLibrary()
-
+-- lib version not script
 local VERSION = "1.0.0"
 
 local Players = game:GetService("Players")
